@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Студент.РФ — единая платформа образования</title>
+<style>
+/* ============ токены ============ */
+:root{
+  --ink:#14213A;
+  --ink-2:#54637E;
+  --ink-3:#8593AB;
+  --line:#DCE3ED;
+  --line-2:#EDF1F6;
+  --bg:#F1F4F9;
+  --surface:#FFFFFF;
+  --brand:#123E8C;
+  --brand-2:#2C6BE8;
+  --brand-soft:#EAF0FD;
+  --ok:#0F7A4D;
+  --ok-soft:#E6F5ED;
+  --warn:#9A6100;
+  --warn-soft:#FDF3E2;
+  --alert:#B42318;
+  --alert-soft:#FDECEA;
+  --r:10px;
+  --r-lg:14px;
+  --shadow:0 1px 2px rgba(20,33,58,.06), 0 8px 24px -12px rgba(20,33,58,.18);
+  --font:"Inter","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+svg{width:18px;height:18px;flex:none}
+svg.big{width:28px;height:28px}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-weight:650;letter-spacing:-.01em}
+h1{font-size:26px;line-height:1.25}
+h2{font-size:18px}
+h3{font-size:16px}
+p{margin:0}
+a{color:var(--brand-2);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+.hidden{display:none !important}
+
+/* ============ каркас ============ */
+.flag{height:3px;display:flex}
+.flag i{flex:1}
+.flag i:nth-child(1){background:#fff}
+.flag i:nth-child(2){background:var(--brand)}
+.flag i:nth-child(3){background:#C7332B}
+
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:1440px;margin:0 auto;padding:0 24px;
+  height:62px;display:flex;align-items:center;gap:18px;
+}
+.logo{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+.logo-mark{
+  width:34px;height:34px;border-radius:8px;flex:none;
+  background:var(--brand);color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:15px;
+}
+.logo-txt b{display:block;font-size:15px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.logo-txt span{display:block;font-size:11px;color:var(--ink-3);letter-spacing:.02em}
+.spacer{flex:1}
+
+.roleswitch{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:3px;gap:2px}
+.roleswitch button{
+  border:0;background:transparent;color:var(--ink-2);
+  padding:6px 13px;border-radius:6px;font-size:13px;font-weight:550;
+}
+.roleswitch button.on{background:var(--surface);color:var(--brand);box-shadow:0 1px 2px rgba(20,33,58,.12)}
+
+.icon-btn{
+  position:relative;width:38px;height:38px;border-radius:9px;border:1px solid var(--line);
+  background:var(--surface);display:grid;place-items:center;color:var(--ink-2);
+}
+.icon-btn:hover{background:var(--bg)}
+.dot{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:#C7332B;border:2px solid #fff}
+.me{display:flex;align-items:center;gap:9px;padding-left:14px;border-left:1px solid var(--line)}
+.ava{width:34px;height:34px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:650;font-size:13px}
+.me small{display:block;color:var(--ink-3);font-size:11.5px;line-height:1.3}
+.me b{font-size:13px;font-weight:600}
+
+.shell{max-width:1440px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:236px 1fr;gap:26px;align-items:start}
+.side{position:sticky;top:86px;padding:22px 0 40px}
+.side-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:650;padding:0 12px 8px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{
+  display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;
+  color:var(--ink-2);font-size:14px;font-weight:550;
+}
+.nav a:hover{background:#E7ECF4;text-decoration:none;color:var(--ink)}
+.nav a.on{background:var(--brand);color:#fff}
+.nav a.on svg{opacity:1}
+.nav svg{width:18px;height:18px;flex:none;opacity:.72}
+.nav .cnt{margin-left:auto;background:#E1E7F1;color:var(--ink-2);border-radius:20px;font-size:11.5px;padding:1px 7px;font-weight:650}
+.nav a.on .cnt{background:rgba(255,255,255,.22);color:#fff}
+.side-note{margin:18px 8px 0;padding:13px;background:var(--brand-soft);border-radius:var(--r);font-size:12.5px;color:#1D4E9E;line-height:1.45}
+.side-note b{display:block;margin-bottom:3px}
+
+.main{padding:24px 0 70px;min-width:0}
+.crumbs{font-size:12.5px;color:var(--ink-3);margin-bottom:10px;display:flex;gap:7px;align-items:center}
+.crumbs span{cursor:pointer}
+.crumbs span:hover{color:var(--brand-2)}
+.page-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:22px}
+.page-head p{color:var(--ink-2);font-size:14px;margin-top:5px;max-width:620px}
+.page-head .spacer{flex:1}
+
+/* ============ элементы ============ */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px}
+.card.pad0{padding:0;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card-head h2{font-size:16px}
+.card-head .spacer{flex:1}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+.muted{color:var(--ink-2)}
+.tiny{font-size:12.5px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:650;color:var(--ink-3)}
+.hr{height:1px;background:var(--line-2);margin:16px 0}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  padding:9px 16px;border-radius:9px;font-weight:600;font-size:14px;
+}
+.btn:hover{background:var(--bg)}
+.btn-p{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn-p:hover{background:#0E3573}
+.btn-sm{padding:6px 12px;font-size:13px;border-radius:8px}
+.btn-lg{padding:12px 22px;font-size:15px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+.btn-block{width:100%}
+
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.badge i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.b-gray{background:#EEF1F6;color:var(--ink-2)}
+.b-blue{background:var(--brand-soft);color:#1D4E9E}
+.b-warn{background:var(--warn-soft);color:var(--warn)}
+.b-ok{background:var(--ok-soft);color:var(--ok)}
+.b-alert{background:var(--alert-soft);color:var(--alert)}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border:1px solid var(--line);border-radius:20px;font-size:12.5px;color:var(--ink-2);background:var(--surface)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:17px 18px}
+.stat .k{font-size:12.5px;color:var(--ink-2);font-weight:550}
+.stat .v{font-size:28px;font-weight:680;letter-spacing:-.03em;margin-top:5px;line-height:1}
+.stat .s{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+.input,select.input{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;
+  font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface);
+}
+.input:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(44,107,232,.13)}
+.input[readonly]{background:var(--bg);color:var(--ink-2)}
+.search{position:relative}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--ink-3)}
+.search .input{padding-left:37px}
+
+table{width:100%;border-collapse:collapse}
+th{
+  text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--ink-3);font-weight:650;padding:11px 16px;border-bottom:1px solid var(--line);background:#FAFBFD;
+}
+td{padding:13px 16px;border-bottom:1px solid var(--line-2);font-size:14px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FAFBFD}
+
+/* ============ подпись макета: рельс статуса ============ */
+.rail{display:flex;align-items:flex-start;margin:6px 0 2px}
+.rail .node{flex:1;position:relative;text-align:center;padding-top:22px}
+.rail .node::before{
+  content:"";position:absolute;top:4px;left:50%;transform:translateX(-50%);
+  width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid var(--line);z-index:2;
+}
+.rail .node::after{content:"";position:absolute;top:9px;left:-50%;width:100%;height:2px;background:var(--line);z-index:1}
+.rail .node:first-child::after{display:none}
+.rail .node.done::before{background:var(--ok);border-color:var(--ok)}
+.rail .node.done::after{background:var(--ok)}
+.rail .node.now::before{background:var(--brand-2);border-color:var(--brand-2);box-shadow:0 0 0 4px rgba(44,107,232,.18)}
+.rail .node.now::after{background:var(--ok)}
+.rail .node.stop::before{background:var(--alert);border-color:var(--alert)}
+.rail .node.stop::after{background:var(--alert)}
+.rail .node b{display:block;font-size:12px;font-weight:600;color:var(--ink-3);line-height:1.3}
+.rail .node.done b,.rail .node.now b,.rail .node.stop b{color:var(--ink)}
+.rail .node small{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+
+/* ============ карточки вузов ============ */
+.org{display:flex;gap:16px;padding:18px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+.org:hover{border-color:#C3D0E4;box-shadow:var(--shadow)}
+.org-logo{
+  width:52px;height:52px;flex:none;border-radius:11px;background:var(--brand-soft);color:var(--brand);
+  display:grid;place-items:center;font-weight:700;font-size:15px;letter-spacing:-.02em;
+}
+.org-body{flex:1;min-width:0}
+.org h3{font-size:15.5px;cursor:pointer}
+.org h3:hover{color:var(--brand-2)}
+.org-meta{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.req{display:flex;gap:22px;margin-top:12px;flex-wrap:wrap}
+.req div{font-size:12.5px;color:var(--ink-3)}
+.req b{display:block;font-size:15px;color:var(--ink);font-weight:650;margin-top:1px}
+.org-side{display:flex;flex-direction:column;gap:8px;align-items:flex-end;justify-content:center;flex:none}
+
+/* ============ шаги мастера ============ */
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.step{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);opacity:.6}
+.step.on{opacity:1;border-color:var(--brand);box-shadow:0 0 0 3px rgba(18,62,140,.09)}
+.step.past{opacity:1}
+.step .n{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.06em}
+.step.on .n{color:var(--brand)}
+.step b{display:block;font-size:13.5px;margin-top:2px}
+
+.pick{display:flex;align-items:center;gap:13px;padding:14px 16px;border-bottom:1px solid var(--line-2)}
+.pick:last-child{border-bottom:0}
+.pick input{width:17px;height:17px;accent-color:var(--brand);cursor:pointer;flex:none}
+.prio{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+
+/* ============ расписание ============ */
+.week-wrap{overflow-x:auto;padding-bottom:4px}
+.week{display:grid;min-width:0;grid-template-columns:64px repeat(6,minmax(0,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.week>div{background:var(--surface);padding:9px 10px;min-height:44px}
+.week .wh{background:#FAFBFD;font-size:12px;font-weight:650;text-align:center;color:var(--ink-2);min-height:auto;padding:10px}
+.week .wt{background:#FAFBFD;font-size:11.5px;color:var(--ink-3);text-align:center;font-weight:600}
+.les{border-left:3px solid var(--brand-2);padding-left:8px !important}
+.les.lab{border-left-color:#0F7A4D}
+.les.lec{border-left-color:#9A6100}
+.les b{display:block;font-size:12.5px;font-weight:600;line-height:1.3}
+.les small{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+
+/* ============ прочее ============ */
+.bar{height:7px;background:var(--line-2);border-radius:20px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand-2);border-radius:20px}
+.doc{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.doc:last-child{border-bottom:0}
+.doc-ic{width:38px;height:38px;border-radius:9px;background:var(--bg);display:grid;place-items:center;color:var(--ink-2);flex:none}
+.doc-b{flex:1;min-width:0}
+.doc-b b{font-size:14px;font-weight:600;display:block}
+.ach{display:flex;gap:12px;padding:13px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.ach-ic{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex:none;font-size:17px}
+.empty{text-align:center;padding:46px 20px;color:var(--ink-2)}
+.empty svg{width:42px;height:42px;color:var(--ink-3);margin-bottom:10px}
+
+.modal-bg{position:fixed;inset:0;background:rgba(20,33,58,.42);z-index:90;display:grid;place-items:center;padding:20px}
+.modal{background:var(--surface);border-radius:16px;max-width:520px;width:100%;padding:26px;box-shadow:0 24px 60px -12px rgba(20,33,58,.4)}
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:100;
+  background:var(--ink);color:#fff;padding:12px 20px;border-radius:11px;font-size:14px;font-weight:550;
+  box-shadow:0 12px 30px -8px rgba(20,33,58,.5);animation:up .22s ease;
+}
+@keyframes up{from{opacity:0;transform:translate(-50%,10px)}}
+
+/* ============ вход ============ */
+.login{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-l{background:var(--brand);color:#fff;padding:52px;display:flex;flex-direction:column;justify-content:space-between;
+  background-image:radial-gradient(circle at 88% 12%,rgba(255,255,255,.09),transparent 46%)}
+.login-l h2{font-size:33px;font-weight:680;letter-spacing:-.025em;line-height:1.18;max-width:430px}
+.login-l p{opacity:.78;margin-top:16px;max-width:400px;font-size:15px}
+.login-facts{display:flex;gap:36px;margin-top:36px}
+.login-facts b{display:block;font-size:26px;font-weight:680;letter-spacing:-.02em}
+.login-facts span{font-size:12.5px;opacity:.7}
+.login-r{display:grid;place-items:center;padding:40px}
+.login-box{width:100%;max-width:352px}
+.gosuslugi{background:#0D4CD3;border-color:#0D4CD3;color:#fff}
+.gosuslugi:hover{background:#0A3EAD}
+.or{display:flex;align-items:center;gap:12px;color:var(--ink-3);font-size:12.5px;margin:18px 0}
+.or::before,.or::after{content:"";height:1px;background:var(--line);flex:1}
+
+/* ============ адаптив ============ */
+@media (max-width:1080px){
+  .split{grid-template-columns:1fr}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 16px}
+  .side{position:static;padding:14px 0 0}
+  .side-label,.side-note{display:none}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav a{white-space:nowrap;background:var(--surface);border:1px solid var(--line)}
+  .g2,.g3{grid-template-columns:1fr}
+  .login{grid-template-columns:1fr}
+  .login-l{display:none}
+  .topbar-in{padding:0 16px;gap:12px}
+  .me small,.logo-txt span{display:none}
+  .steps{overflow-x:auto}
+  .step{min-width:150px}
+  .week{font-size:12px;min-width:700px}
+  .rail{overflow-x:auto}
+  .rail .node{min-width:96px}
+}
+
+/* ============ добавлено во второй версии ============ */
+.langswitch{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:3px;gap:2px}
+.langswitch button{border:0;background:transparent;color:var(--ink-2);padding:6px 12px;border-radius:6px;font-size:12.5px;font-weight:650;letter-spacing:.03em}
+.langswitch button.on{background:var(--surface);color:var(--brand);box-shadow:0 1px 2px rgba(20,33,58,.12)}
+
+.nextstep{display:flex;gap:16px;align-items:center;border:1px solid;border-radius:var(--r-lg);padding:18px 20px}
+.ns-ic{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.75);display:grid;place-items:center;flex:none}
+.ns-ic svg{width:22px;height:22px}
+
+.progs{margin-top:15px;border-top:1px solid var(--line-2)}
+.prog{display:flex;align-items:center;gap:18px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.prog:last-child{border-bottom:0}
+.prog b{font-size:14px;font-weight:600}
+.pv{min-width:104px}
+.pv span{display:block;font-size:11px;color:var(--ink-3);line-height:1.3}
+.pv b{font-size:14px}
+
+.src{font-size:11.5px;color:var(--ink-3);display:flex;gap:6px;align-items:flex-start;line-height:1.45}
+.src svg{width:14px;height:14px;margin-top:1px;opacity:.8}
+.card .src+.src{margin-top:5px}
+
+.cmp-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+.cmp{min-width:680px}
+.cmp th{vertical-align:top;padding:16px;background:var(--surface);border-bottom:1px solid var(--line);text-transform:none;letter-spacing:0}
+.cmp td{padding:13px 16px;font-size:13.5px}
+.cmp .k{background:#FAFBFD;font-size:12.5px;color:var(--ink-2);font-weight:600;width:216px;position:sticky;left:0;z-index:2}
+.best{color:var(--ok)}
+.best::after{content:" ✓";font-size:11px;vertical-align:1px}
+
+.how{display:grid;gap:13px;max-width:520px}
+.how-i{display:flex;gap:12px;align-items:flex-start}
+.how-i>span{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:none;margin-top:1px}
+.how-i b{display:block;font-size:13.5px;font-weight:600}
+.how-i small{display:block;font-size:12px;opacity:.66;line-height:1.45;margin-top:1px}
+
+.preview{border:1px solid var(--line-2);border-radius:var(--r);padding:15px;background:#FAFBFD;opacity:.72;pointer-events:none;filter:saturate(.65)}
+.mini{width:100%}
+.mini td{padding:8px 10px;font-size:12.5px;border-bottom:1px solid var(--line-2)}
+.mini td:last-child{text-align:right}
+.mini-week{display:grid;grid-template-columns:56px repeat(3,minmax(0,1fr));gap:9px}
+.mini-week>div{font-size:12px;color:var(--ink-2)}
+.mini-week b{display:block;font-weight:600;color:var(--ink)}
+.mini-week small{color:var(--ink-3)}
+.mini-acts{display:grid;gap:11px}
+.mini-acts>div{font-size:12.5px;font-weight:600}
+.mini-acts small{display:block;color:var(--ink-3);font-weight:400;margin-top:1px}
+
+.login-l{overflow-y:auto}
+.login-l h2{font-size:30px}
+.nav .cnt{text-transform:lowercase}
+
+@media (max-width:900px){
+  .nextstep{flex-direction:column;align-items:flex-start;gap:12px}
+  .prog{flex-wrap:wrap;gap:10px 18px}
+  .pv{min-width:88px}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* ======================================================================
+   Студент.РФ — макет платформы поступления (RU/EN, без backend)
+   ====================================================================== */
+
+const IC = {
+  home:'M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5',
+  search:'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.3-4.3',
+  folder:'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z',
+  file:'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5ZM14 3v5h5M9 13h6M9 17h4',
+  bell:'M18 9a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7M13.7 20a2 2 0 0 1-3.4 0',
+  scale:'M12 3v18M7 7l-4 8h8L7 7Zm10 0-4 8h8l-4-8ZM4 7h16',
+  check:'M20 6 9 17l-5-5',
+  plus:'M12 5v14M5 12h14',
+  down:'M12 4v12m0 0 4-4m-4 4-4-4M4 20h16',
+  up:'M12 20V8m0 0 4 4M12 8l-4 4M4 4h16',
+  warn:'M12 8v5m0 3h.01M10.3 3.9 2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z',
+  pin:'M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+  info:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 11v5M12 8h.01',
+  arrow:'M5 12h14m0 0-6-6m6 6-6 6',
+  road:'M12 3v18M7 6v3M7 14v3M17 6v3M17 14v3'
+};
+const svg=(n,c='')=>`<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n]}"/></svg>`;
+
+/* ---------------------------------------------------------------------
+   Словарь. Пара [русский, английский] — так термины не расходятся.
+   --------------------------------------------------------------------- */
+const D = {
+  brand:['Студент.РФ','Student.RF'],
+  tagline:['Поступление в российские вузы — в одном личном кабинете','Admission to Russian universities — in one account'],
+  taglineSub:['Найдите программу, подготовьте единое портфолио, подайте заявления и отслеживайте результаты.',
+              'Find a program, build one portfolio, submit applications and track results.'],
+
+  /* навигация */
+  navHome:['Главная','Overview'],
+  navCatalog:['Вузы и колледжи','Universities & colleges'],
+  navList:['Список и сравнение','My list & compare'],
+  navPortfolio:['Портфолио','Portfolio'],
+  navApps:['Мои заявления','My applications'],
+  navNews:['Уведомления','Notifications'],
+  navFuture:['Кабинет студента','Student account'],
+  soon:['в разработке','planned'],
+
+  /* общие */
+  uni:['Вуз','University'], college:['Колледж','College'],
+  unis:['вузы и колледжи','universities & colleges'],
+  program:['Программа','Program'], programs:['Программы','Programs'],
+  save:['Сохранить','Save'],
+  saveProgram:['Сохранить программу','Save program'],
+  savedProgram:['В списке поступления','In my list'],
+  admissionList:['Список поступления','Admission list'],
+  compare:['Сравнить программы','Compare programs'],
+  city:['Город','City'],
+  pass:['Проходной балл 2025','Cut-off score 2025'],
+  passShort:['Проходной','Cut-off'],
+  gpaPass:['Средний балл аттестата','Required GPA'],
+  budget:['Бюджетные места','State-funded places'],
+  paid:['Стоимость в год','Tuition per year'],
+  dorm:['Общежитие','Dormitory'],
+  deadline:['Приём заявлений до','Application deadline'],
+  deadlineShort:['Дедлайн','Deadline'],
+  exams:['Вступительные испытания','Entrance exams'],
+  noExams:['Без вступительных испытаний','No entrance exams'],
+  yes:['есть','yes'], no:['нет','no'],
+  docs:['Документы','Documents'],
+  ach:['Достижения','Achievements'],
+  more:['Подробнее','Details'],
+  back:['Назад','Back'],
+  next:['Далее','Next'],
+  cancel:['Отмена','Cancel'],
+  open:['Открыть','Open'],
+  upload:['Загрузить','Upload'],
+  add:['Добавить','Add'],
+  all:['Все','All'],
+  of:['из','of'],
+  perYear:['в год','per year'],
+  demo:['Демонстрационный макет. Вузы, заявления и оценки вымышленные.',
+        'Demonstration prototype. Institutions, applications and grades are fictional.'],
+
+  /* источник данных */
+  source:['Источник','Source'],
+  updated:['обновлено','updated'],
+  official:['официальные данные приёмной комиссии','official admission office data'],
+  reference:['справочные данные','reference data'],
+  srcNote:['Проходные баллы, число мест и сроки берутся из приказов и правил приёма. Дата показывает, когда данные сверялись с источником.',
+           'Cut-off scores, place counts and deadlines come from official admission rules. The date shows when the data was last verified against the source.'],
+
+  /* статусы */
+  stDraft:['Черновик','Draft'],
+  stSent:['Отправлено','Submitted'],
+  stReview:['На рассмотрении','Under review'],
+  stDocs:['Требуются документы','Documents required'],
+  stOffer:['Рекомендован к зачислению','Offer received'],
+  stNo:['Не прошёл по конкурсу','Not admitted'],
+  /* этапы */
+  e1:['Отправлено','Submitted'],
+  e2:['Проверка документов','Document check'],
+  e3:['Конкурсный список','Ranking list'],
+  e4:['Решение','Decision'],
+  e5:['Зачисление','Enrollment'],
+  inProgress:['в работе','in progress'],
+
+  /* вход */
+  loginTitle:['Вход в личный кабинет','Sign in'],
+  loginSub:['Авторизация проходит через «Госуслуги». Паспорт, аттестат, диплом и результаты ЕГЭ подтягиваются из государственных реестров — загружать их вручную не нужно.',
+            'Sign-in goes through Gosuslugi, the Russian government services portal. Passport, school certificate, diploma and exam results are pulled from state registries, so there is nothing to upload manually.'],
+  loginGos:['Войти через «Госуслуги»','Sign in with Gosuslugi'],
+  loginBtn:['Войти','Sign in'],
+  loginOr:['или','or'],
+  loginMail:['Телефон или электронная почта','Phone or email'],
+  loginPass:['Пароль','Password'],
+  loginNo:['Нет учётной записи?','No account yet?'],
+  loginReg:['Зарегистрироваться','Create one'],
+  howTitle:['Как это работает','How it works'],
+  how1:['Вход через «Госуслуги»','Sign in with Gosuslugi'],
+  how1d:['Личность подтверждена государством — отдельная регистрация не нужна.',
+         'Identity is confirmed by the state — no separate registration.'],
+  how2:['Подтверждённые документы','Verified documents'],
+  how2d:['Аттестат, диплом и баллы ЕГЭ приходят из реестров, а не сканами.',
+         'Certificates, diplomas and exam scores arrive from registries, not as scans.'],
+  how3:['Одно заявление — до 5 вузов','One application, up to 5 institutions'],
+  how3d:['Единое портфолио уходит во все выбранные приёмные комиссии сразу.',
+         'A single portfolio goes to every selected admission office at once.'],
+  how4:['Все статусы в одном месте','All statuses in one place'],
+  how4d:['От проверки документов до приказа о зачислении — без обзвона вузов.',
+         'From document check to the enrollment order — without calling each university.'],
+  gosNote:['Платформа дополняет сервис «Поступление онлайн» на «Госуслугах»: добавляет подбор программ, сравнение и единое портфолио. Замены государственной инфраструктуры не предполагается.',
+           'The platform complements the state "Admission online" service on Gosuslugi: it adds program search, comparison and a single portfolio. It is not meant to replace state infrastructure.'],
+  factOrgs:['вуза и колледжа','universities & colleges'],
+  factProgs:['программ обучения','study programs'],
+  factApps:['заявлений за раз','applications at once'],
+  upTo:['до 5','up to 5']
+};
+let LANG = 0;                              // 0 = ru, 1 = en
+const t = k => D[k][LANG];
+const L = (o,f) => LANG ? (o[f+'En'] || o[f]) : o[f];
+
+const MONTH_RU=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const MONTH_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function fmtDate(iso,short){
+  const [y,m,d]=iso.split('-').map(Number);
+  if(short) return LANG ? `${MONTH_EN[m-1].slice(0,3)} ${d}` : `${d}.${String(m).padStart(2,'0')}.${y}`;
+  return LANG ? `${MONTH_EN[m-1]} ${d}, ${y}` : `${d} ${MONTH_RU[m-1]} ${y} г.`;
+}
+const money = n => LANG ? '₽'+n.toLocaleString('en-US') : n.toLocaleString('ru-RU')+' ₽';
+
+/* ---------------------------------------------------------------------
+   Справочники документов и испытаний — один код, два языка
+   --------------------------------------------------------------------- */
+const DOCTYPE = {
+  passport:['Паспорт гражданина РФ','Russian passport'],
+  attestat:['Аттестат об основном общем образовании','School certificate (9 grades)'],
+  diploma:['Диплом СПО с приложением','Vocational diploma with transcript'],
+  snils:['СНИЛС','SNILS (social insurance number)'],
+  photo:['Фотография 3×4','Photo 3×4'],
+  med:['Медицинская справка 086/у','Medical certificate 086/u'],
+  consent:['Согласие на обработку данных','Personal data consent'],
+  achdoc:['Портфолио достижений','Achievement portfolio']
+};
+const EXAM = {
+  math:['Математика','Mathematics'], inf:['Информатика','Computer science'],
+  rus:['Русский язык','Russian language'], phys:['Физика','Physics']
+};
+const dt = k => DOCTYPE[k][LANG];
+const ex = k => EXAM[k][LANG];
+
+/* ---------------------------------------------------------------------
+   Пользователь
+   --------------------------------------------------------------------- */
+const USER = {
+  name:['Дмитрий Соколов','Dmitry Sokolov'], short:['Соколов Д. А.','D. Sokolov'], initials:['ДС','DS'],
+  role:['Абитуриент 2026','Applicant 2026'],
+  birth:'2007-03-14', city:['Краснодар','Krasnodar'], snils:'187-943-201 55',
+  school:['ККЭП, 3 курс','KKEP College, year 3'],
+  spec:['09.02.01 Компьютерные системы и комплексы','09.02.01 Computer Systems and Complexes'],
+  gpa:4.58,
+  ege:[['Математика (профильная)','Mathematics (advanced)',78],['Русский язык','Russian language',84],['Информатика','Computer science',91]]
+};
+
+/* ---------------------------------------------------------------------
+   Вузы и колледжи
+   --------------------------------------------------------------------- */
+const ORGS = [
+  { id:'kubgu', abbr:'КубГУ', abbrEn:'KubSU', kind:'uni',
+    name:'Кубанский государственный университет', nameEn:'Kuban State University',
+    city:'Краснодар', cityEn:'Krasnodar',
+    admission:'Вступительные испытания вуза (для выпускников СПО) или ЕГЭ',
+    admissionEn:'University entrance exams (for vocational graduates) or state exam results',
+    pass:243, budget:180, deadline:'2026-07-25', dorm:true, mil:true,
+    docs:['passport','diploma','snils','photo','med'], exams:['math','inf','rus'],
+    src:{name:'Правила приёма КубГУ, приказ № 512',nameEn:'KubSU admission rules, order No. 512',date:'2026-06-14',kind:'official'},
+    specs:[{code:'09.03.04',name:'Программная инженерия',nameEn:'Software Engineering',pass:243,budget:45,paid:168000},
+           {code:'02.03.02',name:'Фундаментальная информатика',nameEn:'Fundamental Informatics',pass:231,budget:30,paid:154000},
+           {code:'09.03.03',name:'Прикладная информатика',nameEn:'Applied Informatics',pass:238,budget:35,paid:161000}] },
+
+  { id:'kubgtu', abbr:'КубГТУ', abbrEn:'KubSTU', kind:'uni',
+    name:'Кубанский государственный технологический университет', nameEn:'Kuban State Technological University',
+    city:'Краснодар', cityEn:'Krasnodar',
+    admission:'Вступительные испытания вуза (для выпускников СПО) или ЕГЭ',
+    admissionEn:'University entrance exams (for vocational graduates) or state exam results',
+    pass:216, budget:240, deadline:'2026-07-25', dorm:true, mil:true,
+    docs:['passport','diploma','snils','photo'], exams:['math','inf','rus'],
+    src:{name:'Сайт приёмной комиссии КубГТУ',nameEn:'KubSTU admission office website',date:'2026-06-09',kind:'official'},
+    specs:[{code:'09.03.02',name:'Информационные системы и технологии',nameEn:'Information Systems and Technologies',pass:216,budget:60,paid:139000},
+           {code:'11.03.02',name:'Инфокоммуникационные технологии',nameEn:'Infocommunication Technologies',pass:198,budget:40,paid:132000}] },
+
+  { id:'itmo', abbr:'ИТМО', abbrEn:'ITMO', kind:'uni',
+    name:'Университет ИТМО', nameEn:'ITMO University',
+    city:'Санкт-Петербург', cityEn:'Saint Petersburg',
+    admission:'ЕГЭ, олимпиады или вступительные испытания вуза',
+    admissionEn:'State exam results, olympiads or university entrance exams',
+    pass:289, budget:120, deadline:'2026-07-25', dorm:true, mil:false,
+    docs:['passport','diploma','snils','photo','med','achdoc'], exams:['math','inf','rus'],
+    src:{name:'Правила приёма ИТМО 2026',nameEn:'ITMO admission rules 2026',date:'2026-05-28',kind:'official'},
+    specs:[{code:'09.03.04',name:'Программная инженерия',nameEn:'Software Engineering',pass:296,budget:40,paid:398000},
+           {code:'09.03.01',name:'Информатика и вычислительная техника',nameEn:'Computer Science and Engineering',pass:289,budget:50,paid:376000}] },
+
+  { id:'bmstu', abbr:'МГТУ', abbrEn:'BMSTU', kind:'uni',
+    name:'МГТУ им. Н. Э. Баумана', nameEn:'Bauman Moscow State Technical University',
+    city:'Москва', cityEn:'Moscow',
+    admission:'ЕГЭ или вступительные испытания вуза',
+    admissionEn:'State exam results or university entrance exams',
+    pass:278, budget:310, deadline:'2026-07-25', dorm:true, mil:true,
+    docs:['passport','diploma','snils','photo','med'], exams:['math','phys','rus'],
+    src:{name:'Правила приёма МГТУ, ред. от 03.06.2026',nameEn:'BMSTU admission rules, rev. 03.06.2026',date:'2026-06-03',kind:'official'},
+    specs:[{code:'09.03.01',name:'Информатика и вычислительная техника',nameEn:'Computer Science and Engineering',pass:278,budget:70,paid:355000},
+           {code:'11.03.04',name:'Электроника и наноэлектроника',nameEn:'Electronics and Nanoelectronics',pass:262,budget:55,paid:318000}] },
+
+  { id:'donstu', abbr:'ДГТУ', abbrEn:'DSTU', kind:'uni',
+    name:'Донской государственный технический университет', nameEn:'Don State Technical University',
+    city:'Ростов-на-Дону', cityEn:'Rostov-on-Don',
+    admission:'Вступительные испытания вуза (для выпускников СПО) или ЕГЭ',
+    admissionEn:'University entrance exams (for vocational graduates) or state exam results',
+    pass:205, budget:290, deadline:'2026-07-25', dorm:true, mil:true,
+    docs:['passport','diploma','snils','photo'], exams:['math','inf','rus'],
+    src:{name:'Сайт приёмной комиссии ДГТУ',nameEn:'DSTU admission office website',date:'2026-05-21',kind:'reference'},
+    specs:[{code:'09.03.01',name:'Информатика и вычислительная техника',nameEn:'Computer Science and Engineering',pass:205,budget:65,paid:128000}] },
+
+  { id:'urfu', abbr:'УрФУ', abbrEn:'UrFU', kind:'uni',
+    name:'Уральский федеральный университет', nameEn:'Ural Federal University',
+    city:'Екатеринбург', cityEn:'Yekaterinburg',
+    admission:'ЕГЭ или вступительные испытания вуза',
+    admissionEn:'State exam results or university entrance exams',
+    pass:248, budget:260, deadline:'2026-07-25', dorm:true, mil:true,
+    docs:['passport','diploma','snils','photo'], exams:['math','inf','rus'],
+    src:{name:'Правила приёма УрФУ 2026',nameEn:'UrFU admission rules 2026',date:'2026-06-11',kind:'official'},
+    specs:[{code:'09.03.03',name:'Прикладная информатика',nameEn:'Applied Informatics',pass:248,budget:50,paid:186000}] },
+
+  { id:'kkep', abbr:'ККЭП', abbrEn:'KKEP', kind:'college',
+    name:'Краснодарский колледж электронного приборостроения', nameEn:'Krasnodar College of Electronic Instrument Engineering',
+    city:'Краснодар', cityEn:'Krasnodar',
+    admission:'Конкурс аттестатов по среднему баллу, без вступительных испытаний',
+    admissionEn:'Competition of school certificates by GPA, no entrance exams',
+    pass:4.4, budget:150, deadline:'2026-08-15', dorm:true, mil:false,
+    docs:['passport','attestat','snils','photo','med'], exams:[],
+    src:{name:'Правила приёма ККЭП на 2026/2027',nameEn:'KKEP admission rules 2026/2027',date:'2026-06-02',kind:'official'},
+    specs:[{code:'09.02.01',name:'Компьютерные системы и комплексы',nameEn:'Computer Systems and Complexes',pass:4.4,budget:50,paid:78000},
+           {code:'09.02.07',name:'Информационные системы и программирование',nameEn:'Information Systems and Programming',pass:4.6,budget:75,paid:82000}] },
+
+  { id:'kmpt', abbr:'КМТ', abbrEn:'KMT', kind:'college',
+    name:'Краснодарский монтажный техникум', nameEn:'Krasnodar Technical College of Installation Engineering',
+    city:'Краснодар', cityEn:'Krasnodar',
+    admission:'Конкурс аттестатов по среднему баллу, без вступительных испытаний',
+    admissionEn:'Competition of school certificates by GPA, no entrance exams',
+    pass:4.1, budget:200, deadline:'2026-08-15', dorm:false, mil:false,
+    docs:['passport','attestat','snils','photo'], exams:[],
+    src:{name:'Сайт колледжа, раздел «Абитуриенту»',nameEn:'College website, admissions section',date:'2026-04-30',kind:'reference'},
+    specs:[{code:'09.02.07',name:'Информационные системы и программирование',nameEn:'Information Systems and Programming',pass:4.1,budget:50,paid:66000},
+           {code:'08.02.09',name:'Монтаж электрооборудования',nameEn:'Electrical Equipment Installation',pass:3.8,budget:75,paid:59000}] },
+
+  { id:'mkeit', abbr:'МКЭИТ', abbrEn:'MCEIT', kind:'college',
+    name:'Московский колледж электроники и информационных технологий', nameEn:'Moscow College of Electronics and Information Technology',
+    city:'Москва', cityEn:'Moscow',
+    admission:'Конкурс аттестатов по среднему баллу, без вступительных испытаний',
+    admissionEn:'Competition of school certificates by GPA, no entrance exams',
+    pass:4.7, budget:120, deadline:'2026-08-15', dorm:true, mil:false,
+    docs:['passport','attestat','snils','photo','med'], exams:[],
+    src:{name:'Правила приёма МКЭИТ 2026',nameEn:'MCEIT admission rules 2026',date:'2026-06-07',kind:'official'},
+    specs:[{code:'09.02.06',name:'Сетевое и системное администрирование',nameEn:'Network and System Administration',pass:4.7,budget:60,paid:112000}] }
+];
+const org = id => ORGS.find(o=>o.id===id);
+const prog = (oid,code) => org(oid).specs.find(s=>s.code===code);
+const kindLabel = o => o.kind==='uni' ? t('uni') : t('college');
+
+/* ---------------------------------------------------------------------
+   Статусы и заявления
+   --------------------------------------------------------------------- */
+const ST = { draft:['stDraft','b-gray'], sent:['stSent','b-blue'], review:['stReview','b-blue'],
+             docs:['stDocs','b-warn'], offer:['stOffer','b-ok'], no:['stNo','b-alert'] };
+const stName = s => t(ST[s][0]);
+const stClass = s => ST[s][1];
+const STAGES = ['e1','e2','e3','e4','e5'];
+
+let APPS = [
+  { id:'a1', org:'kubgu', code:'09.03.04', prio:1, status:'offer', stage:4, score:243, place:12, of:45, date:'2026-07-02',
+    log:[['2026-07-02','Заявление отправлено','Application submitted'],
+         ['2026-07-03','Документы проверены, замечаний нет','Documents verified, no issues'],
+         ['2026-07-12','Вступительное испытание по информатике — 91 балл','Entrance exam in computer science — 91 points'],
+         ['2026-07-21','Включён в конкурсный список: 12 место из 45','Added to the ranking list: place 12 of 45'],
+         ['2026-07-28','Рекомендован к зачислению на бюджетное место','Recommended for a state-funded place']],
+    note:['Подтвердите согласие на зачисление до 3 августа, иначе место перейдёт следующему абитуриенту.',
+          'Confirm your enrollment consent by August 3, otherwise the place goes to the next applicant.'] },
+
+  { id:'a2', org:'kubgtu', code:'09.03.02', prio:2, status:'review', stage:3, score:216, place:34, of:60, date:'2026-07-02',
+    log:[['2026-07-02','Заявление отправлено','Application submitted'],
+         ['2026-07-04','Документы проверены, замечаний нет','Documents verified, no issues'],
+         ['2026-07-22','Включён в конкурсный список: 34 место из 60','Added to the ranking list: place 34 of 60']],
+    note:['Конкурсные списки обновляются ежедневно в 18:00.','Ranking lists are updated daily at 18:00.'] },
+
+  { id:'a3', org:'itmo', code:'09.03.04', prio:3, status:'docs', stage:2, score:null, place:null, of:null, date:'2026-07-02',
+    need:'med',
+    log:[['2026-07-02','Заявление отправлено','Application submitted'],
+         ['2026-07-05','Приёмная комиссия запросила недостающий документ','The admission office requested a missing document']],
+    note:['Загрузите медицинскую справку до 18 июля — иначе заявление отклонят.',
+          'Upload the medical certificate by July 18, otherwise the application will be rejected.'] },
+
+  { id:'a4', org:'donstu', code:'09.03.01', prio:4, status:'no', stage:4, score:205, place:71, of:65, date:'2026-07-02',
+    log:[['2026-07-02','Заявление отправлено','Application submitted'],
+         ['2026-07-05','Документы проверены, замечаний нет','Documents verified, no issues'],
+         ['2026-07-23','Включён в конкурсный список: 71 место из 65','Added to the ranking list: place 71 of 65'],
+         ['2026-07-29','Не прошёл по конкурсу на бюджетное место','Did not pass the competition for a state-funded place']],
+    note:['Доступно место на платной основе — 128 000 ₽ в год.','A tuition-based place is available — ₽128,000 per year.'] }
+];
+
+/* ---------------------------------------------------------------------
+   Портфолио
+   --------------------------------------------------------------------- */
+let DOCS = [
+  {k:'passport', s:'ok', m:['PDF, 2 стр. · загружен 14.06.2026','PDF, 2 pages · uploaded June 14, 2026']},
+  {k:'diploma',  s:'ok', m:['PDF, 4 стр. · загружен 20.06.2026','PDF, 4 pages · uploaded June 20, 2026']},
+  {k:'snils',    s:'ok', m:['Получен из реестра «Госуслуг»','Retrieved from the Gosuslugi registry']},
+  {k:'photo',    s:'ok', m:['JPG · загружена 14.06.2026','JPG · uploaded June 14, 2026']},
+  {k:'med',      s:'need', m:['Запрашивают 2 вуза из вашего списка','Requested by 2 institutions in your list']},
+  {k:'consent',  s:'ok', m:['Подписано в «Госуслугах» 14.06.2026','Signed in Gosuslugi on June 14, 2026']}
+];
+const ACH = [
+  {g:['Олимпиады и конкурсы','Olympiads and competitions'], c:'#EAF0FD', e:'🏅', items:[
+    {n:['Олимпиада «Технокубок», отборочный этап','Tekhnokubok Olympiad, qualifying round'],
+     d:['Диплом II степени · 2025','Second-degree diploma · 2025'], p:8},
+    {n:['Чемпионат «Профессионалы», компетенция «Программные решения»','Professionals Championship, Software Solutions'],
+     d:['3 место, региональный этап · 2026','3rd place, regional stage · 2026'], p:6}]},
+  {g:['Спорт и ГТО','Sport and fitness standards'], c:'#E6F5ED', e:'🥇', items:[
+    {n:['Знак отличия ГТО, золотой','GTO gold badge (national fitness standard)'], d:['V ступень · 2025','Level V · 2025'], p:3}]},
+  {g:['Волонтёрство','Volunteering'], c:'#FDF3E2', e:'🤝', items:[
+    {n:['Волонтёрский центр колледжа','College volunteer centre'],
+     d:['48 часов подтверждено в «Добро.РФ»','48 hours verified in Dobro.RF'], p:4},
+    {n:['Сопровождение регионального IT-форума','Support team at a regional IT forum'],
+     d:['Благодарственное письмо · 2026','Letter of appreciation · 2026'], p:2}]},
+  {g:['Проекты и курсы','Projects and courses'], c:'#F2F0FB', e:'💻', items:[
+    {n:['Система позиционирования в помещении на ESP32','Indoor positioning system on ESP32'],
+     d:['Курсовой проект, публичный репозиторий','Course project, public repository'], p:0},
+    {n:['Курс «Основы промышленной разработки»','Industrial Software Development course'],
+     d:['Сертификат · 2026','Certificate · 2026'], p:0}]}
+];
+
+/* ======================================================================
+   Состояние
+   ====================================================================== */
+const S = { logged:false, route:'home', param:null, step:1, agree:false,
+            saved:[{o:'bmstu',c:'09.03.01'},{o:'urfu',c:'09.03.03'}],
+            filter:{q:'',kind:'',city:''} };
+
+const isSaved = (o,c) => S.saved.some(x=>x.o===o && x.c===c);
+const NAVI = [['home','navHome','home'],['catalog','navCatalog','search'],['compare','navList','scale'],
+              ['portfolio','navPortfolio','folder'],['apps','navApps','file'],['news','navNews','bell']];
+
+function go(r,p){ S.route=r; S.param=p||null; window.scrollTo(0,0); render(); }
+function setLang(i){ LANG=i; render(); }
+function toast(txt){ const e=document.createElement('div'); e.className='toast'; e.textContent=txt;
+  document.body.appendChild(e); setTimeout(()=>e.remove(),2600); }
+function modal(html){ const b=document.createElement('div'); b.className='modal-bg'; b.id='mdl';
+  b.innerHTML=`<div class="modal">${html}</div>`; b.onclick=e=>{if(e.target===b) closeModal();};
+  document.body.appendChild(b); }
+const closeModal = () => document.getElementById('mdl')?.remove();
+const today = () => new Date().toISOString().slice(0,10);
+
+/* источник данных — подпись под цифрами */
+function srcLine(o,inline){
+  const s=o.src, kind = s.kind==='official'?t('official'):t('reference');
+  return `<div class="src" ${inline?'style="margin-top:6px"':''}>${svg('info')}
+    <span>${t('source')}: ${L(s,'name')} · ${kind} · ${t('updated')} ${fmtDate(s.date)}</span></div>`;
+}
+
+/* рельс статуса заявления */
+function rail(a){
+  return `<div class="rail">${STAGES.map((k,i)=>{
+    let c = i<a.stage ? 'done' : i===a.stage ? (a.status==='no'?'stop':'now') : '';
+    if(a.status==='offer' && i<=a.stage) c='done';
+    const d = a.log[i] ? fmtDate(a.log[i][0],true) : (c==='now'?t('inProgress'):'');
+    return `<div class="node ${c}"><b>${t(k)}</b><small>${c?d:'—'}</small></div>`;
+  }).join('')}</div>`;
+}
+
+/* ======================================================================
+   Вход
+   ====================================================================== */
+function scrLogin(){
+  const how=[['how1','how1d'],['how2','how2d'],['how3','how3d'],['how4','how4d']];
+  return `<div class="login">
+    <div class="login-l">
+      <div>
+        <div class="logo" style="pointer-events:none;margin-bottom:44px">
+          <div class="logo-mark" style="background:rgba(255,255,255,.16)">${LANG?'S':'С'}</div>
+          <div class="logo-txt"><b style="color:#fff">${t('brand')}</b></div>
+        </div>
+        <h2>${t('tagline')}</h2>
+        <p>${t('taglineSub')}</p>
+        <div class="login-facts">
+          <div><b class="num">1 274</b><span>${t('factOrgs')}</span></div>
+          <div><b class="num">18 906</b><span>${t('factProgs')}</span></div>
+          <div><b>${t('upTo')}</b><span>${t('factApps')}</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:rgba(255,255,255,.55);margin-bottom:12px">${t('howTitle')}</div>
+        <div class="how">
+          ${how.map(([a,b],i)=>`<div class="how-i"><span class="num">${i+1}</span>
+            <div><b>${t(a)}</b><small>${t(b)}</small></div></div>`).join('')}
+        </div>
+        <p style="font-size:12px;opacity:.62;margin-top:20px;max-width:520px">${t('gosNote')}</p>
+      </div>
+    </div>
+    <div class="login-r">
+      <div class="login-box">
+        <div class="langswitch" style="margin-bottom:26px;width:fit-content">
+          <button class="${LANG===0?'on':''}" onclick="setLang(0)">RU</button>
+          <button class="${LANG===1?'on':''}" onclick="setLang(1)">EN</button>
+        </div>
+        <h1 style="font-size:24px">${t('loginTitle')}</h1>
+        <p class="muted tiny" style="margin:8px 0 22px">${t('loginSub')}</p>
+        <button class="btn btn-p btn-lg btn-block gosuslugi" onclick="S.logged=true;render()">${t('loginGos')}</button>
+        <div class="or">${t('loginOr')}</div>
+        <div class="field"><label>${t('loginMail')}</label><input class="input" placeholder="example@mail.ru"></div>
+        <div class="field"><label>${t('loginPass')}</label><input class="input" type="password" placeholder="••••••••"></div>
+        <button class="btn btn-lg btn-block" onclick="S.logged=true;render()">${t('loginBtn')}</button>
+        <p class="tiny muted" style="margin-top:18px;text-align:center">${t('loginNo')}
+          <a href="#" onclick="event.preventDefault();S.logged=true;render()">${t('loginReg')}</a></p>
+        <p class="tiny muted" style="margin-top:26px;text-align:center;opacity:.7">${t('demo')}</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ======================================================================
+   Каркас
+   ====================================================================== */
+function shell(body){
+  const nav = NAVI.map(([r,k,i])=>{
+    const cnt = r==='apps' ? APPS.length : r==='compare' ? S.saved.length : r==='news' ? 3 : 0;
+    return `<a href="#" onclick="event.preventDefault();go('${r}')" class="${S.route===r?'on':''}">${svg(i)}${t(k)}
+      ${cnt?`<span class="cnt num">${cnt}</span>`:''}</a>`;
+  }).join('');
+
+  return `
+  <div class="flag"><i></i><i></i><i></i></div>
+  <header class="topbar"><div class="topbar-in">
+    <div class="logo" onclick="go('home')">
+      <div class="logo-mark">${LANG?'S':'С'}</div>
+      <div class="logo-txt"><b>${t('brand')}</b><span>${t('tagline')}</span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="langswitch">
+      <button class="${LANG===0?'on':''}" onclick="setLang(0)">RU</button>
+      <button class="${LANG===1?'on':''}" onclick="setLang(1)">EN</button>
+    </div>
+    <button class="icon-btn" onclick="go('news')">${svg('bell')}<span class="dot"></span></button>
+    <div class="me" onclick="go('portfolio')">
+      <div class="ava">${L2(USER.initials)}</div>
+      <div><b>${L2(USER.short)}</b><small>${L2(USER.role)}</small></div>
+    </div>
+  </div></header>
+  <div class="shell">
+    <aside class="side">
+      <div class="side-label">${t('admissionList')}</div>
+      <nav class="nav">${nav}
+        <a href="#" onclick="event.preventDefault();go('future')" class="${S.route==='future'?'on':''}" style="margin-top:10px">
+          ${svg('road')}${t('navFuture')}<span class="cnt">${t('soon')}</span></a>
+      </nav>
+      <div class="side-note"><b>${LANG?'Admission 2026 closes July 25':'Приём 2026 закрывается 25 июля'}</b>
+        ${LANG?'12 days left to upload the original diploma and confirm enrollment.':'Осталось 12 дней на подачу оригинала диплома и согласия на зачисление.'}</div>
+    </aside>
+    <main class="main">${body}</main>
+  </div>`;
+}
+const L2 = arr => arr[LANG];
+
+function head(title,sub,right){
+  return `<div class="page-head"><div><h1>${title}</h1>${sub?`<p>${sub}</p>`:''}</div><div class="spacer"></div>${right||''}</div>`;
+}
+function crumbs(items){
+  return `<div class="crumbs">${items.map((x,i)=> i===items.length-1
+    ? `<b style="font-weight:500;color:var(--ink-2)">${x[0]}</b>`
+    : `<span onclick="go('${x[1]}')">${x[0]}</span> ›`).join(' ')}</div>`;
+}
+
+/* ======================================================================
+   Главная
+   ====================================================================== */
+function nextStep(){
+  const d=APPS.find(a=>a.status==='docs');
+  if(d) return { tone:'warn',
+    title: LANG?`Upload the medical certificate 086/u by July 18`:`Загрузите медицинскую справку 086/у до 18 июля`,
+    text: LANG?`${L(org(d.org),'abbr')} will reject the application without it. The document is added to your portfolio once and covers every institution that asks for it.`
+              :`Без неё ${L(org(d.org),'abbr')} отклонит заявление. Документ загружается в портфолио один раз и закрывает всех, кто его запрашивает.`,
+    btn: LANG?'Upload document':'Загрузить документ', fn:`upload('${d.id}')` };
+  const o=APPS.find(a=>a.status==='offer' && a.stage<5);
+  if(o) return { tone:'ok',
+    title: LANG?`Confirm your enrollment consent by August 3`:`Подтвердите согласие на зачисление до 3 августа`,
+    text: LANG?`${L(org(o.org),'abbr')} recommended you for a state-funded place in ${L(prog(o.org,o.code),'name')}. Without consent the place goes to the next applicant.`
+              :`${L(org(o.org),'abbr')} рекомендовал вас на бюджет по программе «${L(prog(o.org,o.code),'name')}». Без согласия место перейдёт следующему.`,
+    btn: LANG?'Give consent':'Подать согласие', fn:`confirmEnroll('${o.id}')` };
+  if(S.saved.length) return { tone:'blue',
+    title: LANG?`Submit an application to ${S.saved.length} saved programs`:`Подайте заявление в ${S.saved.length} сохранённые программы`,
+    text: LANG?'Your portfolio is ready — one application covers every program in the list.'
+              :'Портфолио готово — одно заявление уходит во все программы из списка.',
+    btn: LANG?'Start application':'Подать заявление', fn:`go('apply')` };
+  return { tone:'blue', title: LANG?'Check the ranking lists':'Проверьте конкурсные списки',
+    text: LANG?'Lists are updated daily at 18:00.':'Списки обновляются ежедневно в 18:00.',
+    btn: LANG?'Open applications':'Открыть заявления', fn:`go('apps')` };
+}
+
+function scrHome(){
+  const n=nextStep();
+  const offers=APPS.filter(a=>a.status==='offer').length;
+  const need=APPS.filter(a=>a.status==='docs').length;
+  const ready=Math.round(DOCS.filter(d=>d.s==='ok').length/DOCS.length*100);
+  const tone={warn:['var(--warn-soft)','var(--warn)','#E8D3A8'],ok:['var(--ok-soft)','var(--ok)','#B7DEC8'],blue:['var(--brand-soft)','var(--brand-2)','#BFD3F5']}[n.tone];
+
+  return `
+  ${head(`${LANG?'Hello':'Здравствуйте'}, ${L2(USER.name).split(' ')[0]}`,
+         LANG?'Admission campaign 2026. Everything that needs your attention is below.'
+             :'Приёмная кампания 2026 года. Ниже — то, что требует вашего участия.',
+         `<button class="btn btn-p" onclick="go('catalog')">${svg('search')}${LANG?'Find a program':'Подобрать программу'}</button>`)}
+
+  <div class="nextstep" style="background:${tone[0]};border-color:${tone[2]}">
+    <div class="ns-ic" style="color:${tone[1]}">${svg(n.tone==='ok'?'check':n.tone==='warn'?'warn':'arrow')}</div>
+    <div style="flex:1">
+      <div class="eyebrow" style="color:${tone[1]}">${LANG?'Your next step':'Ваш следующий шаг'}</div>
+      <h2 style="font-size:19px;margin:5px 0 5px">${n.title}</h2>
+      <p class="tiny muted" style="max-width:640px">${n.text}</p>
+    </div>
+    <button class="btn btn-p" onclick="${n.fn}">${n.btn}</button>
+  </div>
+
+  <div class="grid g4" style="margin:16px 0">
+    <div class="stat"><div class="k">${LANG?'Applications submitted':'Заявлений подано'}</div>
+      <div class="v num">${APPS.length}</div><div class="s">${LANG?'admission campaign 2026':'приёмная кампания 2026'}</div></div>
+    <div class="stat"><div class="k">${LANG?'Offers received':'Рекомендаций к зачислению'}</div>
+      <div class="v num" style="color:var(--ok)">${offers}</div><div class="s">${LANG?'KubSU, state-funded':'КубГУ, бюджет'}</div></div>
+    <div class="stat"><div class="k">${LANG?'Need your action':'Требуют действий'}</div>
+      <div class="v num" style="color:var(--warn)">${need+offers}</div><div class="s">${LANG?'deadline August 3':'срок — до 3 августа'}</div></div>
+    <div class="stat"><div class="k">${LANG?'Portfolio readiness':'Готовность портфолио'}</div>
+      <div class="v num">${ready}%</div><div class="s">${LANG?'1 document missing':'не хватает 1 документа'}</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Admission progress':'Ход поступления'}</h2><div class="spacer"></div>
+        <a href="#" onclick="event.preventDefault();go('apps')" class="tiny">${LANG?'All applications →':'Все заявления →'}</a></div>
+      ${APPS.map(a=>`
+        <div style="padding:16px 0;border-top:1px solid var(--line-2)">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+            <b style="font-size:14.5px;cursor:pointer" onclick="go('app','${a.id}')">${L(org(a.org),'abbr')} — ${L(prog(a.org,a.code),'name')}</b>
+            <div class="spacer" style="flex:1"></div>
+            <span class="badge ${stClass(a.status)}"><i></i>${stName(a.status)}</span>
+          </div>
+          ${rail(a)}
+        </div>`).join('')}
+    </div>
+
+    <div style="display:grid;gap:16px">
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Key dates':'Ближайшие даты'}</h2></div>
+        ${[['2026-07-18',LANG?'Last day to upload documents':'Крайний срок догрузки документов','warn'],
+           ['2026-07-25',LANG?'Applications close':'Завершение приёма заявлений','gray'],
+           ['2026-08-03',LANG?'Enrollment consent':'Согласие на зачисление','ok'],
+           ['2026-08-09',LANG?'Enrollment order published':'Приказ о зачислении','gray']].map(([d,txt,c])=>`
+          <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-2)">
+            <div class="badge b-${c}" style="min-width:104px;justify-content:center">${fmtDate(d,true)}</div>
+            <div class="tiny" style="padding-top:2px">${txt}</div>
+          </div>`).join('')}
+        <div class="src" style="margin-top:10px">${svg('info')}<span>${t('updated')} ${fmtDate('2026-06-14')}</span></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>${t('navPortfolio')}</h2></div>
+        <div class="bar" style="margin-bottom:10px"><i style="width:${ready}%"></i></div>
+        <p class="tiny muted">${LANG?'One portfolio is attached to every application automatically. Missing: medical certificate 086/u.'
+                                   :'Одно портфолио прикрепляется ко всем заявлениям автоматически. Не хватает медицинской справки 086/у.'}</p>
+        <button class="btn btn-sm btn-block" style="margin-top:13px" onclick="go('portfolio')">${LANG?'Open portfolio':'Открыть портфолио'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ======================================================================
+   Каталог вузов и колледжей
+   ====================================================================== */
+function scrCatalog(){
+  const f=S.filter;
+  const list=ORGS.filter(o=>
+    (!f.q || (L(o,'name')+L(o,'abbr')+o.specs.map(s=>L(s,'name')+s.code).join()).toLowerCase().includes(f.q.toLowerCase())) &&
+    (!f.kind || o.kind===f.kind) && (!f.city || o.city===f.city));
+  const cities=[...new Set(ORGS.map(o=>o.city))];
+
+  return `
+  ${head(t('navCatalog'),
+    LANG?'Programs of Russian universities and colleges with current admission requirements. Save the ones you like — you can compare them side by side and apply to all at once.'
+        :'Программы российских вузов и колледжей с актуальными требованиями приёма. Сохраняйте подходящие — их можно сравнить между собой и подать заявление сразу во все.',
+    `<button class="btn btn-p" onclick="go('compare')">${svg('scale')}${t('admissionList')}: ${S.saved.length}</button>`)}
+
+  <div class="card" style="margin-bottom:16px;padding:16px">
+    <div style="display:grid;grid-template-columns:1fr 190px 190px;gap:12px">
+      <div class="search">${svg('search')}<input class="input" value="${f.q}"
+        placeholder="${LANG?'Institution, city or program':'Вуз, колледж, город или программа'}"
+        oninput="S.filter.q=this.value;render()"></div>
+      <select class="input" onchange="S.filter.kind=this.value;render()">
+        <option value="">${LANG?'All types':'Все типы'}</option>
+        <option value="uni" ${f.kind==='uni'?'selected':''}>${t('uni')}</option>
+        <option value="college" ${f.kind==='college'?'selected':''}>${t('college')}</option>
+      </select>
+      <select class="input" onchange="S.filter.city=this.value;render()">
+        <option value="">${LANG?'All of Russia':'Вся Россия'}</option>
+        ${cities.map(c=>`<option value="${c}" ${f.city===c?'selected':''}>${LANG?(ORGS.find(o=>o.city===c).cityEn):c}</option>`).join('')}
+      </select>
+    </div>
+  </div>
+
+  <div class="tiny muted" style="margin-bottom:12px">${LANG?'Found':'Найдено'}:
+    <b class="num">${list.length}</b> ${LANG?'institutions':'вузов и колледжей'} ·
+    <b class="num">${list.reduce((s,o)=>s+o.specs.length,0)}</b> ${LANG?'programs':'программ'}</div>
+
+  <div class="grid" style="gap:12px">
+  ${list.length?list.map(o=>`
+    <div class="card">
+      <div style="display:flex;gap:15px;align-items:flex-start">
+        <div class="org-logo">${L(o,'abbr')}</div>
+        <div style="flex:1;min-width:0">
+          <h3 style="font-size:15.5px;cursor:pointer" onclick="go('org','${o.id}')">${L(o,'name')}</h3>
+          <div class="org-meta">${kindLabel(o)} · ${L(o,'city')} · ${t('deadline')} ${fmtDate(o.deadline)}</div>
+          <div class="chips" style="margin-top:8px">
+            <span class="chip">${t('dorm')}: ${o.dorm?t('yes'):t('no')}</span>
+            <span class="chip">${t('budget')}: ${o.budget}</span>
+            <span class="chip">${o.exams.length?o.exams.map(ex).join(', '):t('noExams')}</span>
+          </div>
+        </div>
+        <button class="btn btn-sm" onclick="go('org','${o.id}')">${t('more')}</button>
+      </div>
+      <div class="progs">
+        ${o.specs.map(s=>{ const on=isSaved(o.id,s.code);
+          return `<div class="prog">
+            <div style="flex:1;min-width:0">
+              <b>${L(s,'name')}</b><div class="tiny muted num">${s.code}</div>
+            </div>
+            <div class="pv"><span>${o.kind==='college'?t('gpaPass'):t('passShort')}</span><b class="num">${s.pass}</b></div>
+            <div class="pv"><span>${t('budget')}</span><b class="num">${s.budget}</b></div>
+            <div class="pv"><span>${t('paid')}</span><b class="num">${money(s.paid)}</b></div>
+            <button class="btn btn-sm ${on?'':'btn-p'}" onclick="save('${o.id}','${s.code}')">
+              ${on?'✓ '+t('savedProgram'):t('saveProgram')}</button>
+          </div>`}).join('')}
+      </div>
+      ${srcLine(o,true)}
+    </div>`).join('')
+  :`<div class="card empty">${svg('search')}<h3>${LANG?'Nothing found':'Ничего не найдено'}</h3>
+      <p class="tiny muted" style="margin-top:6px">${LANG?'Change the query or reset the filters.':'Измените запрос или сбросьте фильтры.'}</p>
+      <button class="btn btn-sm" style="margin-top:14px" onclick="S.filter={q:'',kind:'',city:''};render()">
+        ${LANG?'Reset filters':'Сбросить фильтры'}</button></div>`}
+  </div>`;
+}
+
+function save(o,c){
+  const i=S.saved.findIndex(x=>x.o===o&&x.c===c);
+  if(i<0){
+    if(S.saved.length>=5) return toast(LANG?'Up to 5 programs in one application':'В одном заявлении не больше 5 программ');
+    S.saved.push({o,c}); toast(LANG?'Saved to your admission list':'Сохранено в список поступления');
+  } else { S.saved.splice(i,1); toast(LANG?'Removed from the list':'Убрано из списка'); }
+  render();
+}
+
+/* ======================================================================
+   Карточка вуза или колледжа
+   ====================================================================== */
+function scrOrg(){
+  const o=org(S.param);
+  return `
+  ${crumbs([[t('navCatalog'),'catalog'],[L(o,'abbr')]])}
+  <div class="card" style="margin-bottom:16px;display:flex;gap:18px;align-items:flex-start">
+    <div class="org-logo" style="width:64px;height:64px;font-size:16px">${L(o,'abbr')}</div>
+    <div style="flex:1">
+      <h1 style="font-size:22px">${L(o,'name')}</h1>
+      <div class="org-meta" style="margin-top:5px">${kindLabel(o)} · ${L(o,'city')} ·
+        ${LANG?'state accreditation until 2029':'государственная аккредитация до 2029 г.'}</div>
+      <div class="chips" style="margin-top:11px">
+        <span class="chip">${svg('pin')}${L(o,'city')}</span>
+        <span class="chip">${t('dorm')}: ${o.dorm?t('yes'):t('no')}</span>
+        <span class="chip">${t('budget')}: ${o.budget}</span>
+        <span class="chip">${t('deadline')} ${fmtDate(o.deadline)}</span>
+      </div>
+      ${srcLine(o,true)}
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="card pad0">
+      <div style="padding:18px 20px 0"><h2>${t('programs')}</h2>
+        <p class="tiny muted" style="margin-top:4px">${LANG?'Cut-off scores are from the 2025 admission results.'
+                                                          :'Проходные баллы — по результатам приёма 2025 года.'}</p></div>
+      <table style="margin-top:14px">
+        <thead><tr><th>${t('program')}</th><th>${o.kind==='college'?t('gpaPass'):t('passShort')}</th>
+          <th>${t('budget')}</th><th>${t('paid')}</th><th></th></tr></thead>
+        <tbody>${o.specs.map(s=>{const on=isSaved(o.id,s.code);
+          return `<tr>
+            <td><b style="font-weight:600">${L(s,'name')}</b><div class="tiny muted num">${s.code}</div></td>
+            <td class="num"><b>${s.pass}</b></td><td class="num">${s.budget}</td><td class="num">${money(s.paid)}</td>
+            <td style="text-align:right"><button class="btn btn-sm ${on?'':'btn-p'}" onclick="save('${o.id}','${s.code}')">
+              ${on?'✓ '+t('savedProgram'):t('saveProgram')}</button></td></tr>`}).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:grid;gap:16px">
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'How to apply':'Как поступить'}</h2></div>
+        <p class="tiny">${L(o,'admission')}</p>
+        ${o.exams.length?`<div class="hr"></div><div class="eyebrow" style="margin-bottom:8px">${t('exams')}</div>
+          <div class="chips">${o.exams.map(e=>`<span class="chip">${ex(e)}</span>`).join('')}</div>`:''}
+        <div class="hr"></div>
+        <div class="eyebrow" style="margin-bottom:8px">${LANG?'Dates':'Сроки'}</div>
+        <div class="tiny">${t('deadline')} <b>${fmtDate(o.deadline)}</b><br>
+          ${LANG?'Enrollment consent — by August 3, 2026':'Согласие на зачисление — до 3 августа 2026 г.'}</div>
+        ${srcLine(o,true)}
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>${t('docs')}</h2></div>
+        ${o.docs.map(k=>{ const have=!DOCS.find(x=>x.k===k&&x.s==='need');
+          return `<div style="display:flex;gap:9px;align-items:center;padding:7px 0;font-size:13.5px">
+            <span style="color:${have?'var(--ok)':'var(--warn)'};display:grid;place-items:center;width:18px">${svg(have?'check':'warn')}</span>
+            <span style="flex:1">${dt(k)}</span>
+            ${have?`<span class="tiny muted">${LANG?'in portfolio':'в портфолио'}</span>`
+                  :`<span class="badge b-warn"><i></i>${LANG?'missing':'нет'}</span>`}
+          </div>`}).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ======================================================================
+   Список поступления и сравнение программ
+   ====================================================================== */
+function scrCompare(){
+  if(!S.saved.length) return `
+    ${head(t('navList'),LANG?'Save programs from the catalog to compare them side by side.'
+                            :'Сохраняйте программы из каталога, чтобы сравнить их между собой.')}
+    <div class="card empty">${svg('scale')}<h3>${LANG?'Your list is empty':'Список пуст'}</h3>
+      <p class="tiny muted" style="margin-top:6px">${LANG?'Up to 5 programs can be compared and submitted in one application.'
+                                                        :'Сравнить и подать одним заявлением можно до 5 программ.'}</p>
+      <button class="btn btn-p btn-sm" style="margin-top:14px" onclick="go('catalog')">${LANG?'Open catalog':'Открыть каталог'}</button></div>`;
+
+  const items=S.saved.map(x=>({o:org(x.o),s:prog(x.o,x.c)}));
+  const minPaid=Math.min(...items.map(i=>i.s.paid));
+  const maxBudget=Math.max(...items.map(i=>i.s.budget));
+  const rows=[
+    [t('city'), i=>L(i.o,'city')],
+    [LANG?'Type':'Тип', i=>kindLabel(i.o)],
+    [LANG?'Cut-off / required GPA':'Проходной / средний балл', i=>`<b class="num">${i.s.pass}</b>`],
+    [t('budget'), i=>`<b class="num ${i.s.budget===maxBudget?'best':''}">${i.s.budget}</b>`],
+    [t('paid'), i=>`<b class="num ${i.s.paid===minPaid?'best':''}">${money(i.s.paid)}</b>`],
+    [t('dorm'), i=>i.o.dorm?t('yes'):t('no')],
+    [t('exams'), i=>i.o.exams.length?i.o.exams.map(ex).join(', '):t('noExams')],
+    [t('deadlineShort'), i=>fmtDate(i.o.deadline)],
+    [LANG?'Data verified':'Данные сверены', i=>`<span class="tiny muted">${fmtDate(i.o.src.date)}</span>`]
+  ];
+
+  return `
+  ${head(t('navList'),
+    LANG?'Everything you saved, side by side. One application covers all programs in this list.'
+        :'Всё, что вы сохранили, — рядом друг с другом. Одно заявление закрывает все программы из списка.',
+    `<button class="btn btn-p" onclick="go('apply')">${LANG?'Apply to all':'Подать во все'} (${S.saved.length})</button>`)}
+
+  <div class="cmp-wrap"><table class="cmp">
+    <thead><tr><th class="k">${t('program')}</th>
+      ${items.map((i,n)=>`<th>
+        <div class="org-logo" style="width:34px;height:34px;font-size:11px;margin-bottom:7px">${L(i.o,'abbr')}</div>
+        <b style="display:block;font-size:13.5px;text-transform:none;letter-spacing:0;color:var(--ink)">${L(i.s,'name')}</b>
+        <span class="tiny muted num" style="text-transform:none;letter-spacing:0">${L(i.o,'abbr')} · ${i.s.code}</span>
+        <button class="btn btn-sm" style="margin-top:9px;width:100%" onclick="save('${i.o.id}','${i.s.code}')">
+          ${LANG?'Remove':'Убрать'}</button></th>`).join('')}
+    </tr></thead>
+    <tbody>${rows.map(([label,fn])=>`<tr><td class="k">${label}</td>
+      ${items.map(i=>`<td>${fn(i)}</td>`).join('')}</tr>`).join('')}
+    </tbody>
+  </table></div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-head"><h2>${LANG?'Where the numbers come from':'Откуда цифры'}</h2></div>
+    <p class="tiny muted" style="margin-bottom:12px">${t('srcNote')}</p>
+    ${[...new Set(S.saved.map(x=>x.o))].map(id=>srcLine(org(id))).join('')}
+  </div>`;
+}
+
+/* ======================================================================
+   Портфолио
+   ====================================================================== */
+function scrPortfolio(){
+  const pts=ACH.reduce((s,g)=>s+g.items.reduce((a,i)=>a+i.p,0),0);
+  const ready=Math.round(DOCS.filter(d=>d.s==='ok').length/DOCS.length*100);
+  return `
+  ${head(t('navPortfolio'),
+    LANG?'One set of documents and achievements. It is attached to every application automatically — nothing has to be uploaded twice.'
+        :'Единый комплект документов и достижений. Он прикрепляется к каждому заявлению автоматически — загружать файлы повторно не нужно.',
+    `<button class="btn" onclick="toast('${LANG?'portfolio-sokolov.pdf generated':'Файл portfolio-sokolov.pdf сформирован'}')">${svg('down')}PDF</button>`)}
+
+  <div class="split">
+    <div style="display:grid;gap:16px">
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Personal data':'Личные данные'}</h2><div class="spacer"></div>
+          <span class="badge b-ok"><i></i>${LANG?'Verified by Gosuslugi':'Подтверждено «Госуслугами»'}</span></div>
+        <div class="grid g2" style="gap:0 16px">
+          <div class="field"><label>${LANG?'Full name':'Фамилия, имя, отчество'}</label>
+            <input class="input" value="${L2(USER.name)}" readonly></div>
+          <div class="field"><label>${LANG?'Date of birth':'Дата рождения'}</label>
+            <input class="input" value="${fmtDate(USER.birth)}" readonly></div>
+          <div class="field"><label>SNILS</label><input class="input num" value="${USER.snils}" readonly></div>
+          <div class="field"><label>${t('city')}</label><input class="input" value="${L2(USER.city)}" readonly></div>
+          <div class="field"><label>${LANG?'Current studies':'Место учёбы'}</label><input class="input" value="${L2(USER.school)}" readonly></div>
+          <div class="field"><label>${LANG?'Current program':'Текущая программа'}</label><input class="input" value="${L2(USER.spec)}" readonly></div>
+        </div>
+        <div class="hr"></div>
+        <div class="eyebrow" style="margin-bottom:9px">${LANG?'State exam results · from the registry':'Результаты ЕГЭ · из реестра'}</div>
+        <div class="chips">${USER.ege.map(e=>`<span class="chip">${LANG?e[1]:e[0]} — <b class="num">&nbsp;${e[2]}</b></span>`).join('')}</div>
+        <div class="src" style="margin-top:10px">${svg('info')}<span>${LANG?'Source: Federal register of exam results · updated':'Источник: федеральная информационная система ГИА · обновлено'} ${fmtDate('2026-06-20')}</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>${t('docs')}</h2><div class="spacer"></div>
+          <button class="btn btn-sm" onclick="upload()">${svg('up')}${t('upload')}</button></div>
+        ${DOCS.map(d=>`<div class="doc">
+          <div class="doc-ic">${svg('file')}</div>
+          <div class="doc-b"><b>${dt(d.k)}</b><div class="tiny muted">${L2(d.m)}</div></div>
+          ${d.s==='ok'?`<span class="badge b-ok"><i></i>${LANG?'Verified':'Проверен'}</span>`
+            :d.s==='wait'?`<span class="badge b-blue"><i></i>${LANG?'Under check':'На проверке'}</span>`
+            :`<span class="badge b-warn"><i></i>${LANG?'Required':'Требуется'}</span>`}
+          ${d.s==='need'?`<button class="btn btn-sm btn-p" onclick="upload()">${t('upload')}</button>`
+            :`<button class="btn btn-sm" onclick="toast('${LANG?'File preview is not available in the prototype':'Просмотр файла недоступен в макете'}')">${t('open')}</button>`}
+        </div>`).join('')}
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>${t('ach')}</h2><div class="spacer"></div>
+          <button class="btn btn-sm" onclick="addAch()">${svg('plus')}${t('add')}</button></div>
+        ${ACH.map(g=>`<div style="margin-bottom:18px">
+          <div class="eyebrow" style="margin-bottom:9px">${L2(g.g)}</div>
+          <div class="grid" style="gap:9px">
+          ${g.items.map(it=>`<div class="ach">
+            <div class="ach-ic" style="background:${g.c}">${g.e}</div>
+            <div style="flex:1"><b style="font-size:14px;font-weight:600">${L2(it.n)}</b>
+              <div class="tiny muted">${L2(it.d)}</div></div>
+            ${it.p?`<span class="badge b-blue" style="align-self:center">+${it.p}</span>`
+                  :`<span class="badge b-gray" style="align-self:center">${LANG?'no points':'без баллов'}</span>`}
+          </div>`).join('')}</div></div>`).join('')}
+      </div>
+    </div>
+
+    <div style="display:grid;gap:16px">
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Readiness':'Готовность'}</h2></div>
+        <div class="num" style="font-size:34px;font-weight:680;letter-spacing:-.03em">${ready}%</div>
+        <div class="bar" style="margin:10px 0 12px"><i style="width:${ready}%"></i></div>
+        <p class="tiny muted">${LANG?'The portfolio is complete when every document requested by your saved programs is uploaded.'
+                                   :'Портфолио считается полным, когда загружены все документы, которые запрашивают сохранённые программы.'}</p>
+        <div class="hr"></div>
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0">
+          <span class="muted">${LANG?'Achievement points':'Баллы за достижения'}</span><b class="num">${pts} ${t('of')} 10</b></div>
+        <p class="tiny muted" style="margin-top:6px">${LANG?'Achievement points are added to the competition score. The legal maximum is 10.'
+                                                          :'Баллы за достижения прибавляются к конкурсной сумме. Максимум по закону — 10.'}</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Who can see it':'Кто видит портфолио'}</h2></div>
+        <p class="tiny muted" style="margin-bottom:12px">${LANG?'Admission offices you have applied to.':'Приёмные комиссии, в которые подано заявление.'}</p>
+        ${APPS.map(a=>`<div class="tiny" style="padding:7px 0;border-bottom:1px solid var(--line-2)">${L(org(a.org),'name')}</div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function upload(appId){
+  modal(`<h2>${LANG?'Upload a document':'Загрузка документа'}</h2>
+    <p class="tiny muted" style="margin:8px 0 18px">${LANG?'PDF, JPG or PNG up to 10 MB. The admission office usually checks a document within 2 working days.'
+                                                         :'PDF, JPG или PNG до 10 МБ. Приёмная комиссия проверяет документ обычно за 2 рабочих дня.'}</p>
+    <div style="border:1.5px dashed var(--line);border-radius:12px;padding:30px;text-align:center;color:var(--ink-2)">
+      ${svg('up','big')}<div style="margin-top:8px;font-size:14px"><b>${LANG?'Drop the file here':'Перетащите файл сюда'}</b></div>
+      <div class="tiny muted">${LANG?'or choose it on your device':'или выберите на устройстве'}</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn btn-block" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn btn-p btn-block" onclick="doUpload()">${t('upload')} 086/${LANG?'u':'у'}</button>
+    </div>`);
+}
+function doUpload(){
+  const d=DOCS.find(x=>x.s==='need');
+  if(d){ d.s='wait'; d.m=[`PDF · загружен ${fmtDate(today())}, проверяется`,`PDF · uploaded ${fmtDate(today())}, under check`]; }
+  const a=APPS.find(x=>x.status==='docs');
+  if(a){ a.status='review'; a.stage=2;
+    a.note=['Документ загружен и передан в приёмную комиссию.','The document has been uploaded and sent to the admission office.'];
+    a.log.push([today(),'Загружена медицинская справка 086/у','Medical certificate 086/u uploaded']); }
+  closeModal(); toast(LANG?'Document uploaded and sent for verification':'Документ загружен и отправлен на проверку'); render();
+}
+function confirmEnroll(id){
+  const a=APPS.find(x=>x.id===id);
+  modal(`<h2>${LANG?'Enrollment consent':'Согласие на зачисление'}</h2>
+    <p class="tiny muted" style="margin:8px 0 16px">${LANG?'Consent can be given to one institution only. Other applications stay active, but priority goes to the chosen program.'
+                                                          :'Согласие подаётся только в один вуз. Остальные заявления сохраняются, но приоритет — за выбранной программой.'}</p>
+    <div class="card" style="background:var(--bg);border:0">
+      <b>${L(org(a.org),'name')}</b>
+      <div class="tiny muted" style="margin-top:4px">${L(prog(a.org,a.code),'name')} ·
+        ${LANG?'state-funded · full-time':'бюджетная основа · очная форма'}</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="btn btn-block" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn btn-p btn-block" onclick="doEnroll('${id}')">${LANG?'Give consent':'Подать согласие'}</button>
+    </div>`);
+}
+function doEnroll(id){
+  const a=APPS.find(x=>x.id===id); a.stage=5;
+  a.note=['Согласие принято. Приказ о зачислении — 9 августа.','Consent accepted. The enrollment order is published on August 9.'];
+  a.log.push([today(),'Подано согласие на зачисление','Enrollment consent submitted']);
+  closeModal(); toast(LANG?'Consent submitted':'Согласие подано'); render();
+}
+function addAch(){
+  modal(`<h2>${LANG?'Add an achievement':'Добавить достижение'}</h2>
+    <p class="tiny muted" style="margin:8px 0 18px">${LANG?'It appears in the portfolio once the supporting document is verified.'
+                                                         :'Оно появится в портфолио после проверки подтверждающего документа.'}</p>
+    <div class="field"><label>${LANG?'Category':'Категория'}</label><select class="input">
+      ${ACH.map(g=>`<option>${L2(g.g)}</option>`).join('')}</select></div>
+    <div class="field"><label>${LANG?'Title':'Название'}</label><input class="input"
+      placeholder="${LANG?'e.g. Physics olympiad, finalist':'Например: Олимпиада по физике, призёр'}"></div>
+    <div class="field"><label>${LANG?'Supporting document':'Подтверждающий документ'}</label>
+      <input class="input" value="${LANG?'No file selected':'Файл не выбран'}" readonly></div>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button class="btn btn-block" onclick="closeModal()">${t('cancel')}</button>
+      <button class="btn btn-p btn-block" onclick="closeModal();toast('${LANG?'Achievement sent for verification':'Достижение отправлено на проверку'}')">${t('add')}</button>
+    </div>`);
+}
+
+/* ======================================================================
+   Подача заявления
+   ====================================================================== */
+function scrApply(){
+  const names=LANG?['Programs','Priorities','Documents','Confirmation']:['Программы','Приоритеты','Документы','Подтверждение'];
+  return `${head(LANG?'New application':'Подача заявления',
+    LANG?'One set of documents goes to every selected admission office. You can withdraw or change the application until the deadline.'
+        :'Один комплект документов уходит во все выбранные приёмные комиссии. Отозвать или изменить заявление можно до конца приёма.')}
+  <div class="steps">${names.map((n,i)=>`
+    <div class="step ${S.step===i+1?'on':S.step>i+1?'past':''}" onclick="S.step=${i+1};render()">
+      <div class="n">${LANG?'STEP':'ШАГ'} ${i+1}</div><b>${n}</b></div>`).join('')}</div>
+  ${[step1,step2,step3,step4][S.step-1]()}`;
+}
+
+function step1(){
+  return `<div class="split">
+    <div class="card pad0">
+      <div style="padding:18px 20px"><h2>${t('admissionList')}</h2>
+        <p class="tiny muted" style="margin-top:4px">${LANG?'Up to 5 programs in one application.':'До 5 программ в одном заявлении.'}</p></div>
+      ${S.saved.length?S.saved.map(x=>{const o=org(x.o),s=prog(x.o,x.c);
+        return `<div class="pick">
+          <input type="checkbox" checked onchange="save('${x.o}','${x.c}')">
+          <div class="org-logo" style="width:40px;height:40px;font-size:12px">${L(o,'abbr')}</div>
+          <div style="flex:1"><b style="font-size:14px">${L(s,'name')}</b>
+            <div class="tiny muted">${L(o,'name')} · ${L(o,'city')} · ${t('deadline')} ${fmtDate(o.deadline)}</div></div>
+          <span class="badge b-gray num">${o.kind==='college'?t('gpaPass'):t('passShort')} ${s.pass}</span>
+        </div>`}).join(''):`<div class="empty">${svg('folder')}<h3>${LANG?'The list is empty':'Список пуст'}</h3></div>`}
+      <div style="padding:16px 20px;border-top:1px solid var(--line-2)">
+        <button class="btn btn-sm" onclick="go('catalog')">${svg('plus')}${LANG?'Add from catalog':'Добавить из каталога'}</button></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'A tip':'Подсказка'}</h2></div>
+      <p class="tiny muted">${LANG?'Mix the difficulty: one program well below your score, two around it and one ambitious. That is how the list actually works in your favour.'
+                                  :'Смешивайте уровни: одна программа заметно ниже вашего балла, две вровень и одна на вырост. Так список реально работает на вас.'}</p>
+      <div class="hr"></div>
+      <button class="btn btn-p btn-block" ${S.saved.length?'':'disabled'} onclick="S.step=2;render()">${t('next')}</button>
+    </div>
+  </div>`;
+}
+
+function step2(){
+  return `<div class="split">
+    <div class="grid" style="gap:12px">
+    ${S.saved.map((x,i)=>{const o=org(x.o),s=prog(x.o,x.c);
+      return `<div class="card">
+        <div style="display:flex;gap:13px;align-items:center">
+          <div class="prio num">${i+1}</div>
+          <div style="flex:1"><b>${L(s,'name')}</b>
+            <div class="tiny muted">${L(o,'name')} · ${LANG?'priority':'приоритет'} ${i+1} ${t('of')} ${S.saved.length}</div></div>
+          <button class="btn btn-sm" ${i===0?'disabled':''} onclick="move(${i},-1)">↑</button>
+          <button class="btn btn-sm" ${i===S.saved.length-1?'disabled':''} onclick="move(${i},1)">↓</button>
+        </div>
+        <div class="chips" style="margin-top:12px">
+          <span class="chip">${o.exams.length?t('exams')+': '+o.exams.map(ex).join(', '):t('noExams')}</span>
+          <span class="chip">${t('budget')}: ${s.budget}</span>
+          <span class="chip">${t('paid')}: ${money(s.paid)}</span>
+        </div>
+      </div>`}).join('')}
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Priorities':'Приоритеты'}</h2></div>
+      <p class="tiny muted">${LANG?'Order matters: if you pass into several programs at once, you are enrolled into the highest one. The order can be changed until July 25.'
+                                  :'Порядок важен: если вы проходите сразу в несколько программ, зачисление идёт по верхнему приоритету. Менять порядок можно до 25 июля.'}</p>
+      <div class="hr"></div>
+      <button class="btn btn-p btn-block" onclick="S.step=3;render()">${t('next')}</button>
+      <button class="btn btn-block" style="margin-top:9px" onclick="S.step=1;render()">${t('back')}</button>
+    </div>
+  </div>`;
+}
+function move(i,d){ const j=i+d; if(j<0||j>=S.saved.length) return;
+  [S.saved[i],S.saved[j]]=[S.saved[j],S.saved[i]]; render(); }
+
+function step3(){
+  const need=[...new Set(S.saved.flatMap(x=>org(x.o).docs))];
+  const missing=need.filter(k=>DOCS.find(d=>d.k===k&&d.s==='need'));
+  return `<div class="split">
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Document set':'Комплект документов'}</h2><div class="spacer"></div>
+        <span class="tiny muted">${LANG?'assembled from your portfolio':'собирается из портфолио'}</span></div>
+      ${need.map(k=>{const bad=missing.includes(k);
+        return `<div class="doc">
+          <div class="doc-ic" style="color:${bad?'var(--warn)':'var(--ok)'}">${svg(bad?'warn':'check')}</div>
+          <div class="doc-b"><b>${dt(k)}</b><div class="tiny muted">${bad?(LANG?'Requested by programs in your list':'Запрашивают программы из вашего списка')
+                                                                        :(LANG?'Uploaded and verified':'Загружен и проверен')}</div></div>
+          ${bad?`<button class="btn btn-sm btn-p" onclick="upload()">${t('upload')}</button>`
+               :`<span class="badge b-ok"><i></i>${LANG?'Ready':'Готов'}</span>`}
+        </div>`}).join('')}
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Check':'Проверка'}</h2></div>
+      ${missing.length?`<div class="badge b-warn" style="margin-bottom:10px"><i></i>${LANG?'Missing':'Не хватает'}: ${missing.length}</div>
+        <p class="tiny muted">${LANG?'You can submit now and upload the certificate by July 18. Programs that need it will show “Documents required”.'
+                                    :'Можно отправить сейчас, а справку догрузить до 18 июля. Программы, которым она нужна, покажут статус «Требуются документы».'}</p>`
+        :`<div class="badge b-ok" style="margin-bottom:10px"><i></i>${LANG?'Complete':'Комплект полный'}</div>`}
+      <div class="hr"></div>
+      <button class="btn btn-p btn-block" onclick="S.step=4;render()">${t('next')}</button>
+      <button class="btn btn-block" style="margin-top:9px" onclick="S.step=2;render()">${t('back')}</button>
+    </div>
+  </div>`;
+}
+
+function step4(){
+  return `<div class="split">
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Review your application':'Проверьте заявление'}</h2></div>
+      <div class="eyebrow" style="margin-bottom:8px">${LANG?'Applicant':'Абитуриент'}</div>
+      <div class="tiny">${L2(USER.name)} · ${fmtDate(USER.birth)} · SNILS ${USER.snils}</div>
+      <div class="hr"></div>
+      <div class="eyebrow" style="margin-bottom:10px">${t('programs')}</div>
+      ${S.saved.map((x,i)=>{const o=org(x.o),s=prog(x.o,x.c);
+        return `<div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line-2)">
+          <div class="prio num" style="width:26px;height:26px;font-size:12px">${i+1}</div>
+          <div style="flex:1"><b style="font-size:14px">${L(o,'abbr')} — ${L(s,'name')}</b>
+            <div class="tiny muted num">${s.code} · ${LANG?'full-time · state-funded and tuition':'очная форма · бюджет и платное'}</div></div>
+          <span class="tiny muted num">${o.kind==='college'?t('gpaPass'):t('passShort')} ${s.pass}</span>
+        </div>`}).join('')}
+      <div class="hr"></div>
+      <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+        <input type="checkbox" style="width:17px;height:17px;accent-color:var(--brand);margin-top:2px"
+          ${S.agree?'checked':''} onchange="S.agree=this.checked;render()">
+        <span class="tiny">${LANG?'I confirm that the information is accurate and agree to its processing by the selected admission offices.'
+                                 :'Подтверждаю достоверность сведений и согласен на их обработку выбранными приёмными комиссиями.'}</span>
+      </label>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Summary':'Итого'}</h2></div>
+      ${[[LANG?'Programs':'Программ',S.saved.length],
+         [LANG?'Institutions':'Вузов и колледжей',new Set(S.saved.map(x=>x.o)).size],
+         [LANG?'Documents attached':'Документов приложено',DOCS.filter(d=>d.s!=='need').length],
+         [LANG?'Achievement points':'Баллов за достижения','+23']].map(([k,v])=>`
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13.5px">
+          <span class="muted">${k}</span><b class="num">${v}</b></div>`).join('')}
+      <div class="hr"></div>
+      <button class="btn btn-p btn-block btn-lg" ${S.agree?'':'disabled'} onclick="submitApp()">
+        ${LANG?'Submit application':'Отправить заявление'}</button>
+      ${S.agree?'':`<p class="tiny muted" style="margin-top:8px;text-align:center">${LANG?'Tick the consent to submit':'Отметьте согласие, чтобы отправить'}</p>`}
+    </div>
+  </div>`;
+}
+
+function submitApp(){
+  const added=[];
+  S.saved.forEach(x=>{
+    if(APPS.find(a=>a.org===x.o&&a.code===x.c)) return;
+    APPS.push({id:'n'+x.o+x.c,org:x.o,code:x.c,prio:APPS.length+1,status:'sent',stage:1,score:null,place:null,of:null,
+      date:today(),log:[[today(),'Заявление отправлено','Application submitted']],
+      note:['Приёмная комиссия проверит документы за 2 рабочих дня.','The admission office will check the documents within 2 working days.']});
+    added.push(L(org(x.o),'abbr'));
+  });
+  modal(`<div style="text-align:center">
+    <div style="width:54px;height:54px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px">${svg('check')}</div>
+    <h2>${LANG?'Application submitted':'Заявление отправлено'}</h2>
+    <p class="tiny muted" style="margin:8px 0 18px">${LANG?`Documents were sent to ${added.length||S.saved.length} admission offices${added.length?': '+added.join(', '):''}. Every status appears under “My applications”; notifications also go to your email and Gosuslugi account.`
+      :`Документы ушли в ${added.length||S.saved.length} приёмные комиссии${added.length?': '+added.join(', '):''}. Статусы появятся в разделе «Мои заявления», уведомления придут на почту и в «Госуслуги».`}</p>
+    <button class="btn btn-p btn-block" onclick="closeModal();S.step=1;S.agree=false;go('apps')">
+      ${LANG?'Go to applications':'Перейти к заявлениям'}</button>
+  </div>`);
+}
+
+/* ======================================================================
+   Мои заявления
+   ====================================================================== */
+function scrApps(){
+  return `${head(t('navApps'),
+    LANG?'Statuses update automatically as soon as an admission office makes a decision.'
+        :'Статусы обновляются автоматически, как только приёмная комиссия принимает решение.',
+    `<button class="btn btn-p" onclick="go('apply')">${svg('plus')}${LANG?'New application':'Новое заявление'}</button>`)}
+  <div class="grid" style="gap:12px">
+  ${APPS.map(a=>{const o=org(a.org),s=prog(a.org,a.code);
+    return `<div class="card">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div class="org-logo" style="width:44px;height:44px;font-size:12px">${L(o,'abbr')}</div>
+        <div style="flex:1;min-width:0">
+          <b style="font-size:15px;cursor:pointer" onclick="go('app','${a.id}')">${L(s,'name')}</b>
+          <div class="tiny muted" style="margin-top:3px">${L(o,'name')} · ${LANG?'submitted':'подано'} ${fmtDate(a.date)} ·
+            ${LANG?'priority':'приоритет'} ${a.prio}</div>
+        </div>
+        <span class="badge ${stClass(a.status)}"><i></i>${stName(a.status)}</span>
+      </div>
+      <div style="margin:16px 0 12px">${rail(a)}</div>
+      <div style="display:flex;align-items:center;gap:22px;border-top:1px solid var(--line-2);padding-top:13px;flex-wrap:wrap">
+        ${a.score?`<div class="tiny muted">${LANG?'Score':'Сумма баллов'} <b class="num" style="color:var(--ink)">${a.score}</b></div>`:''}
+        ${a.place?`<div class="tiny muted">${LANG?'Ranking place':'Место в списке'} <b class="num" style="color:var(--ink)">${a.place} ${t('of')} ${a.of}</b></div>`:''}
+        <div class="tiny muted" style="flex:1;min-width:180px">${L2(a.note)}</div>
+        <button class="btn btn-sm" onclick="go('app','${a.id}')">${t('more')}</button>
+      </div>
+    </div>`}).join('')}
+  </div>`;
+}
+
+function scrApp(){
+  const a=APPS.find(x=>x.id===S.param), o=org(a.org), s=prog(a.org,a.code);
+  const action = a.status==='docs' ? `<button class="btn btn-p btn-block" onclick="upload('${a.id}')">${t('upload')} ${dt(a.need)}</button>`
+    : a.status==='offer' && a.stage<5 ? `<button class="btn btn-p btn-block" onclick="confirmEnroll('${a.id}')">${LANG?'Give enrollment consent':'Подать согласие на зачисление'}</button>`
+    : a.status==='no' ? `<button class="btn btn-block" onclick="toast('${LANG?'Contract flow is not available in the prototype':'Переход к договору недоступен в макете'}')">${LANG?'Consider a tuition place':'Рассмотреть платное место'}</button>`
+    : `<button class="btn btn-block" onclick="toast('${LANG?'Ranking lists are updated at 18:00':'Конкурсные списки обновляются в 18:00'}')">${LANG?'Refresh status':'Обновить статус'}</button>`;
+  return `
+  ${crumbs([[t('navApps'),'apps'],[L(o,'abbr')]])}
+  <div class="card" style="margin-bottom:16px">
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <div class="org-logo" style="width:56px;height:56px;font-size:14px">${L(o,'abbr')}</div>
+      <div style="flex:1">
+        <h1 style="font-size:21px">${L(s,'name')}</h1>
+        <div class="tiny muted" style="margin-top:4px">${L(o,'name')} · ${s.code} ·
+          ${LANG?'full-time · state-funded':'очная форма · бюджетная основа'}</div>
+      </div>
+      <span class="badge ${stClass(a.status)}"><i></i>${stName(a.status)}</span>
+    </div>
+    <div class="hr"></div>
+    ${rail(a)}
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="card-head"><h2>${LANG?'Application history':'История заявления'}</h2></div>
+      ${a.log.slice().reverse().map((l,i)=>`
+        <div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-2)">
+          <div class="tiny muted num" style="min-width:92px">${fmtDate(l[0],true)}</div>
+          <div style="width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;background:${i===0?'var(--brand-2)':'var(--line)'}"></div>
+          <div style="font-size:13.5px">${LANG?l[2]:l[1]}</div>
+        </div>`).join('')}
+    </div>
+    <div style="display:grid;gap:16px">
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'What happens next':'Что дальше'}</h2></div>
+        <p class="tiny muted" style="margin-bottom:14px">${L2(a.note)}</p>
+        ${action}
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Competition':'Конкурс'}</h2></div>
+        ${[[LANG?'Your score':'Сумма баллов',a.score??'—'],
+           [LANG?'Ranking place':'Место в списке',a.place?`${a.place} ${t('of')} ${a.of}`:'—'],
+           [t('budget'),s.budget],
+           [o.kind==='college'?t('gpaPass'):t('pass'),s.pass]].map(([k,v])=>`
+          <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13.5px">
+            <span class="muted">${k}</span><b class="num">${v}</b></div>`).join('')}
+        ${srcLine(o,true)}
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>${LANG?'Admission office':'Приёмная комиссия'}</h2></div>
+        <p class="tiny muted">${L(o,'city')} · ${t('deadline')} ${fmtDate(o.deadline)}<br>+7 (861) 000-00-00 · priem@${o.id}.ru</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ======================================================================
+   Уведомления
+   ====================================================================== */
+function scrNews(){
+  const n=[
+    ['2026-07-28',['КубГУ: вы рекомендованы к зачислению','KubSU: you have received an offer'],
+     ['Подтвердите согласие до 3 августа, иначе место перейдёт следующему абитуриенту.','Confirm consent by August 3, otherwise the place goes to the next applicant.'],'ok'],
+    ['2026-07-05',['ИТМО запросил медицинскую справку 086/у','ITMO requested medical certificate 086/u'],
+     ['Загрузите документ в портфолио до 18 июля.','Upload the document to your portfolio by July 18.'],'warn'],
+    ['2026-07-22',['КубГТУ обновил конкурсный список','KubSTU updated the ranking list'],
+     ['Ваша позиция — 34 из 60. Списки обновляются ежедневно в 18:00.','Your position is 34 of 60. Lists are updated daily at 18:00.'],'blue'],
+    ['2026-07-21',['Начался приём согласий на зачисление','Enrollment consent period has opened'],
+     ['Согласие можно подать только в один вуз.','Consent can be given to one institution only.'],'gray'],
+    ['2026-07-12',['Результат вступительного испытания: информатика — 91','Entrance exam result: computer science — 91'],
+     ['КубГУ, программа «Программная инженерия».','KubSU, Software Engineering program.'],'blue']
+  ];
+  return `${head(t('navNews'),
+    LANG?'Duplicated to your email and Gosuslugi account.':'Дублируются на электронную почту и в личный кабинет «Госуслуг».',
+    `<button class="btn btn-sm" onclick="toast('${LANG?'All marked as read':'Все отмечены как прочитанные'}')">${LANG?'Mark all read':'Отметить прочитанными'}</button>`)}
+  <div class="card pad0">
+    ${n.map(([d,ti,su,c])=>`<div style="display:flex;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line-2)">
+      <div class="doc-ic" style="background:var(--${c==='ok'?'ok':c==='warn'?'warn':'brand'}-soft);color:var(--${c==='ok'?'ok':c==='warn'?'warn':'brand'})">
+        ${svg(c==='ok'?'check':c==='warn'?'warn':'bell')}</div>
+      <div style="flex:1"><b style="font-size:14px">${L2(ti)}</b><div class="tiny muted" style="margin-top:3px">${L2(su)}</div></div>
+      <div class="tiny muted" style="white-space:nowrap">${fmtDate(d,true)}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+/* ======================================================================
+   Future Development — кабинет студента после зачисления
+   ====================================================================== */
+function scrFuture(){
+  const blocks=[
+    {t:['Журнал оценок','Grade book'],
+     d:['Оценки по дисциплинам, средний балл семестра и предварительный балл диплома — тот самый показатель, по которому выпускник СПО потом поступает в вуз.',
+        'Grades by subject, semester GPA and the projected diploma score — the very number a vocational graduate later applies to university with.'],
+     p:`<table class="mini"><tbody>
+        ${[[['Основы программирования','Programming fundamentals'],'5 5 4 5','4.75'],
+           [['Микропроцессорные системы','Microprocessor systems'],'5 4 5 5','4.75'],
+           [['Цифровая схемотехника','Digital circuit design'],'4 4 5 4','4.25']]
+          .map(r=>`<tr><td>${L2(r[0])}</td><td class="num">${r[1]}</td><td class="num"><b>${r[2]}</b></td></tr>`).join('')}
+        </tbody></table>`},
+    {t:['Расписание','Timetable'],
+     d:['Недельная сетка занятий с аудиториями и заменами. Требует интеграции с учебной частью каждого заведения — поэтому вынесено за пределы первой версии.',
+        'A weekly timetable with rooms and replacements. It requires integration with each institution’s academic office, which is why it is out of scope for v1.'],
+     p:`<div class="mini-week">${['08:30','10:10','11:50'].map((tm,i)=>`
+        <div class="num">${tm}</div>
+        <div>${i<2?`<b>${L2(['Компьютерные сети','Computer networks'])}</b><small>${L2(['ауд. 312','room 312'])}</small>`:''}</div>
+        <div>${i===1?`<b>${L2(['Микропроцессорные системы','Microprocessor systems'])}</b><small>${L2(['лаб. 402','lab 402'])}</small>`:''}</div>
+        <div>${i===0?`<b>${L2(['Основы программирования','Programming fundamentals'])}</b><small>${L2(['ауд. 210','room 210'])}</small>`:''}</div>`).join('')}</div>`},
+    {t:['Активности и волонтёрство','Activities and volunteering'],
+     d:['Мероприятия, волонтёрские часы и наставничество. Единственный блок, который логично связан с поступлением: подтверждённые часы попадают в портфолио и дают баллы.',
+        'Events, volunteer hours and mentoring. The one block genuinely tied to admission: verified hours land in the portfolio and earn points.'],
+     p:`<div class="mini-acts">
+        <div><b>${L2(['Волонтёр IT-форума «Цифровой Юг»','Volunteer at the Digital South IT forum'])}</b>
+          <small>${L2(['12–13 сентября · +16 часов','September 12–13 · +16 hours'])}</small></div>
+        <div><b>${L2(['Наставничество для первокурсников','Mentoring first-year students'])}</b>
+          <small>${L2(['весь семестр · +24 часа','whole semester · +24 hours'])}</small></div></div>`}
+  ];
+  return `
+  ${head(LANG?'Student account after enrollment':'Кабинет студента после зачисления',
+    LANG?'Planned for a later release. The first version deliberately covers admission only.'
+        :'Запланировано на следующие версии. Первая версия сознательно закрывает только поступление.')}
+
+  <div class="card" style="margin-bottom:16px;background:var(--brand-soft);border-color:#BFD3F5">
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="ns-ic" style="color:var(--brand)">${svg('road')}</div>
+      <div>
+        <div class="eyebrow" style="color:var(--brand)">Future development</div>
+        <h2 style="margin:5px 0 6px">${LANG?'Why it is not in version one':'Почему этого нет в первой версии'}</h2>
+        <p class="tiny" style="max-width:720px;color:#1D4E9E">${LANG
+          ?'Grades, timetables, rooms, teachers and homework turn the product into a campus information system and dilute its main job — getting an applicant from “I don’t know where to apply” to “I am enrolled”. Each institution already runs its own system here, and integrating with them is a separate project. The scenarios below are kept as a roadmap, not as part of the first release.'
+          :'Оценки, расписание, аудитории, преподаватели и домашние задания превращают продукт в университетскую информационную систему и размывают главную задачу — довести абитуриента от «не знаю, куда поступать» до «я зачислен». В этой части у каждого заведения уже есть своя система, и интеграция с ними — отдельный проект. Сценарии ниже сохранены как дорожная карта, а не как часть первого релиза.'}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="gap:12px">
+  ${blocks.map((b,i)=>`<div class="card">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
+      <span class="badge b-gray num">${i+1}</span>
+      <h2 style="flex:1">${L2(b.t)}</h2>
+      <span class="badge b-blue"><i></i>${t('soon')}</span>
+    </div>
+    <p class="tiny muted" style="margin-bottom:14px;max-width:760px">${L2(b.d)}</p>
+    <div class="preview">${b.p}</div>
+  </div>`).join('')}
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-head"><h2>${LANG?'Roadmap':'Дорожная карта'}</h2></div>
+    ${[[LANG?'v1 — Admission':'v1 — Поступление',LANG?'Catalog, comparison, portfolio, applications, statuses. Current prototype.'
+                                                     :'Каталог, сравнение, портфолио, заявления, статусы. Текущий макет.','ok'],
+       [LANG?'v1.1 — Admission office view':'v1.1 — Кабинет приёмной комиссии',LANG?'Incoming applications, document verification, ranking lists.'
+                                                     :'Входящие заявления, проверка документов, конкурсные списки.','blue'],
+       [LANG?'v2 — Student account':'v2 — Кабинет студента',LANG?'Activities and volunteer hours first, then grades and timetable via integrations.'
+                                                     :'Сначала активности и волонтёрские часы, затем оценки и расписание через интеграции.','gray']].map(([k,v,c])=>`
+      <div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-2)">
+        <span class="badge b-${c}" style="min-width:190px"><i></i>${k}</span>
+        <div class="tiny muted" style="padding-top:2px">${v}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+/* ======================================================================
+   Подвал и роутер
+   ====================================================================== */
+function footer(){
+  const links=LANG?['About the platform','Admission rules','Support','Data policy']
+                  :['О платформе','Правила приёма','Поддержка','Политика обработки данных'];
+  return `<footer style="margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px">
+    <div style="display:flex;gap:26px;flex-wrap:wrap;margin-bottom:12px">
+      ${links.map(l=>`<a href="#" onclick="event.preventDefault()">${l}</a>`).join('')}</div>
+    <p>${t('brand')} — ${t('tagline')}. ${t('demo')}</p>
+  </footer>`;
+}
+
+const SCREENS={home:scrHome,catalog:scrCatalog,org:scrOrg,compare:scrCompare,portfolio:scrPortfolio,
+               apply:scrApply,apps:scrApps,app:scrApp,news:scrNews,future:scrFuture};
+
+function render(){
+  const root=document.getElementById('root');
+  if(!S.logged){ root.innerHTML=scrLogin(); return; }
+  root.innerHTML=shell((SCREENS[S.route]||scrHome)()+footer());
+  const s=document.querySelector('.search .input');
+  if(s&&S.filter.q){ s.focus(); s.setSelectionRange(s.value.length,s.value.length); }
+}
+render();
+
+</script>
+</body>
+</html>
